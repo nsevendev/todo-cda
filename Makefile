@@ -5,12 +5,15 @@
 #   export $(shell sed 's/=.*//' .env.dev)
 #endif
 
+NAME_CONTAINER=todo-cda-php
+NAME_CONTAINER_DATABASE=todo-cda-database
+
 # Executables (local)
 DOCKER_COMP = docker compose
 DOCKER_COMP_PROD = docker compose -f compose.yaml -f compose.prod.yaml
 
 # Docker containers
-PHP_CONT = $(DOCKER_COMP) exec php
+PHP_CONT = $(DOCKER_COMP) exec $(NAME_CONTAINER)
 
 # Executables
 PHP      = $(PHP_CONT) php
@@ -41,10 +44,10 @@ start: build up ## Build and start the containers mode dev
 
 ## —— Docker generic 🐳 ————————————————————————————————————————————————————————————————
 down: ## Stop the docker hub
-	@$(DOCKER_COMP) down --remove-orphans
+	@$(DOCKER_COMP) down
 
 logs: ## Show live logs
-	@$(DOCKER_COMP) logs -f php
+	@$(DOCKER_COMP) logs -f $(NAME_CONTAINER)
 
 sh: ## Connect to the FrankenPHP container
 	@$(PHP_CONT) sh
@@ -97,10 +100,10 @@ start-prod: build up-prod ## Build and start the containers mode prod
 
 ## —— Docker other 🐳 ————————————————————————————————————————————————————————————————
 #create-test-db: ## Create the test database (NOT USE by default, use sqlite for tests in cache)
-	@$(DOCKER_COMP) exec database sh -c 'psql -U "$(POSTGRES_USER)" -d postgres -c "CREATE DATABASE $(POSTGRES_DB)_test OWNER = $(POSTGRES_USER);"'
+	@$(DOCKER_COMP) exec $(NAME_CONTAINER_DATABASE) sh -c 'psql -U "$(POSTGRES_USER)" -d postgres -c "CREATE DATABASE $(POSTGRES_DB)_test OWNER = $(POSTGRES_USER);"'
 
 sh-database: ## Connect to the database container
-	@$(DOCKER_COMP) exec database sh
+	@$(DOCKER_COMP) exec $(NAME_CONTAINER_DATABASE) sh
 
 m-bdd: ## drop and create database for tests
 	@$(COMPOSER) migration-bdd-test
