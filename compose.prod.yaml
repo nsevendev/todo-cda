@@ -1,6 +1,6 @@
 # Production environment override
 services:
-  php:
+  todo-cda-php:
     build:
       context: .
       target: frankenphp_prod

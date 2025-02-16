@@ -1,32 +1,50 @@
 # Development environment override
 services:
-  php:
+  todo-cda-php:
     build:
       context: .
       target: frankenphp_dev
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-nseven"
+      - "traefik.http.routers.todo-cda-php.rule=Host(`todo-cda.api.dev.local`)"
+      - "traefik.http.routers.todo-cda-php.entrypoints=websecure"
+      - "traefik.http.routers.todo-cda-php.tls=true"
+      - "traefik.http.routers.todo-cda-php.tls.certresolver=default"
+      - "traefik.http.services.todo-cda-php.loadbalancer.server.port=80"
+      - "traefik.http.services.todo-cda-php.loadbalancer.server.scheme=http"
     volumes:
       - ./:/app:delegated
       - ./frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
-      # If you develop on Mac or Windows you can remove the vendor/ directory
-      #  from the bind-mount for better performance by enabling the next line:
-      #- /app/vendor
     environment:
       MERCURE_EXTRA_DIRECTIVES: demo
-      # See https://xdebug.org/docs/all_settings#mode
       XDEBUG_MODE: "${XDEBUG_MODE:-off}"
     extra_hosts:
-      # Ensure that host.docker.internal is correctly defined on Linux
       - host.docker.internal:host-gateway
     tty: true
+    networks:
+      - traefik-nseven
+      - todo-cda-network
 
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
+  
+  todo-cda-rabbitmq:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-nseven"
+      - "traefik.http.routers.todo-cda-rabbitmq.rule=Host(`todo-cda.r.dev.local`)"
+      - "traefik.http.routers.todo-cda-rabbitmq.entrypoints=websecure"
+      - "traefik.http.routers.todo-cda-rabbitmq.tls=true"
+      - "traefik.http.routers.todo-cda-rabbitmq.tls.certresolver=default"
+      - "traefik.http.services.todo-cda-rabbitmq.loadbalancer.server.port=15672"
 
 ###> doctrine/doctrine-bundle ###
-  database:
-    ports:
-      - target: 5432
-        published: ${POSTGRES_PORT:-5432}
-        protocol: tcp
 ###< doctrine/doctrine-bundle ###
+
+networks:
+  traefik-nseven:
+    external: true
+  todo-cda-network:
+    driver: bridge
