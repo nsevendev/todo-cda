@@ -62,7 +62,7 @@ jobs:
         run: docker compose exec todo-cda-php composer migration-bdd-test
         
       - name: Run Composer Check
-        run: docker compose exec todo-cd-php composer check
+        run: docker compose exec todo-cda-php composer check
 
       - name: Shut Down Docker Containers
         if: always()
