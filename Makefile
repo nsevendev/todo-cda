@@ -1,8 +1,8 @@
-#find variable in .env.dev file
+#find variable in .env.dev.local file
 
-#ifneq (,$(wildcard .env.dev))
-#   include .env.dev
-#   export $(shell sed 's/=.*//' .env.dev)
+#ifneq (,$(wildcard .env.dev.local))
+#   include .env.dev.local
+#   export $(shell sed 's/=.*//' .env.dev.local)
 #endif
 
 NAME_CONTAINER=todo-cda-php
@@ -23,7 +23,6 @@ SYMFONY_TEST  = $(PHP) bin/phpunit
 
 # Files env
 ENV_FILE_DEV = .env.dev.local
-ENV_FILE_PROD = .env.prod.local
 
 # Misc
 .DEFAULT_GOAL = help
@@ -94,7 +93,7 @@ cc: sf
 
 ## —— Docker prod 🐳 ————————————————————————————————————————————————————————————————
 up-prod: ## Start the docker hub mode prod in detached mode (no logs)
-	@$(DOCKER_COMP_PROD) --env-file $(ENV_FILE_PROD) up --detach
+	@$(DOCKER_COMP_PROD) up --detach
 
 start-prod: build up-prod ## Build and start the containers mode prod
 
