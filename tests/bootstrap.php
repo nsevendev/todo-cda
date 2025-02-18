@@ -7,8 +7,8 @@ use Tocda\Kernel;
 require dirname(__DIR__).'/vendor/autoload.php';
 
 $dotenv = new Dotenv();
-$dotenv->usePutenv()->overload(dirname(__DIR__).'/.env.dev.local');
-$dotenv->usePutenv()->overload(dirname(__DIR__).'/.env.test.local');
+$dotenv->usePutenv()->overload(dirname(__DIR__).'/.env.dev');
+$dotenv->usePutenv()->overload(dirname(__DIR__).'/.env.test');
 
 $kernel = new Kernel('test', true);
 $kernel->boot();
