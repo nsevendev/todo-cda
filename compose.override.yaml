@@ -39,6 +39,10 @@ services:
       - "traefik.http.routers.todo-cda-rabbitmq.tls=true"
       - "traefik.http.routers.todo-cda-rabbitmq.tls.certresolver=default"
       - "traefik.http.services.todo-cda-rabbitmq.loadbalancer.server.port=15672"
+        
+  todo-cda-worker:
+    volumes:
+      - ./:/app
 
 ###> doctrine/doctrine-bundle ###
 ###< doctrine/doctrine-bundle ###

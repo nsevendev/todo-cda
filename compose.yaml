@@ -59,6 +59,30 @@ services:
     networks:
       - traefik-nseven
       - todo-cda-network
+        
+  todo-cda-worker:
+    build:
+      context: .
+      target: frankenphp_dev
+    image: ${IMAGES_PREFIX:-}app-php
+    restart: unless-stopped
+    command: php bin/console messenger:consume -vvv
+    environment:
+      SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
+      MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
+      MERCURE_PUBLIC_URL: ${CADDY_MERCURE_PUBLIC_URL:-https://${SERVER_NAME:-localhost}/.well-known/mercure}
+      MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      SYMFONY_VERSION: ${SYMFONY_VERSION:-}
+      STABILITY: ${STABILITY:-stable}
+    depends_on:
+      - todo-cda-php
+      - todo-cda-database
+      - todo-cda-rabbitmq
+    networks:
+      - traefik-nseven
+      - todo-cda-network
 
 volumes:
   caddy_data:
