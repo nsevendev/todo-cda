@@ -15,6 +15,7 @@ services:
       - "traefik.http.services.todo-cda-php.loadbalancer.server.scheme=http"
     volumes:
       - ./:/app:delegated
+      - ./var:/app/var:delegated
       - ./frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
     environment:
