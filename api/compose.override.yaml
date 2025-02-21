@@ -1,0 +1,13 @@
+services:
+  todo-cda-api:
+    image: todo-cda-api:dev
+    build:
+      target: dev
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-nseven"
+      - "traefik.http.routers.todo-cda-api.rule=Host(`todo-cda.api.local`)"
+      - "traefik.http.routers.todo-cda-api.entrypoints=websecure"
+      - "traefik.http.routers.todo-cda-api.tls=true"
+      - "traefik.http.routers.todo-cda-api.tls.certresolver=default"
+      - "traefik.http.services.todo-cda-api.loadbalancer.server.port=80"
