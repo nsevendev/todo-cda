@@ -2,14 +2,14 @@ services:
   todo-cda-api:
     container_name: todo-cda-api
     build:
-      context: .
+      context: ./api
       dockerfile: Dockerfile
     env_file:
       - .env
     depends_on:
       - todo-cda-db
     volumes:
-      - .:/app:delegate
+      - ./api:/app:delegate
     networks:
       - traefik-nseven
       - todo-cda
