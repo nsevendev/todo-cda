@@ -2,18 +2,16 @@
 NAME_CONT_API = todo-cda-api
 NAME_CONT_FRONT = todo-cda-front
 NAME_CONT_DB = todo-cda-db
-
 # command
 DOCKER = docker
 DOCKER_COMP = docker compose
 DOT = dotnet
-
+DOT_EF = dotnet ef 
 # access 
 APP_CONT_API = $(DOCKER_COMP) exec $(NAME_CONT_API) bash
 APP_CONT_FRONT = $(DOCKER_COMP) exec $(NAME_CONT_FRONT) bash
 APP_CONT_DB = $(DOCKER_COMP) exec $(NAME_CONT_DB) bash
-
-APP_CONT_API_DOT = $(DOCKER_COMP) exec $(NAME_CONT_API) $(DOT)
+APP_CONT_API_DOT = $(DOCKER) exec $(NAME_CONT_API) $(DOT)
 
 # Misc
 .DEFAULT_GOAL = help
@@ -56,6 +54,15 @@ dotadd: ## Add a package in api project c="<name_package>"
 	@$(APP_CONT_API_DOT) add package $(c)
 	@echo "✅ Ajout du package $(c) dans le projet API ---> END OK"
 
-## —— Docker test 🧪 🐳 ————————————————————————————————————————————————————————————————
+dotef: ## Entity Framework command in api project c="<command>"
+	@echo "🚀 Commande Dotnet Entity Framework dans le projet API ---> START"
+	@$(APP_CONT_API_DOT) ef $(c)
+	@echo "✅ Commande Dotnet Entity Framework dans le projet API ---> END OK"
+
+## —— Docker dotnet test 🧪 🐳 ————————————————————————————————————————————————————————————————
+update-test-db: ## Update or create the test database
+	@echo "🚀 Modification ou creation de la base de test ---> START"
+	@$(DOCKER) exec -e ASPNETCORE_ENVIRONMENT=Test $(NAME_CONT_API) $(DOT_EF) database update
+	@echo "✅ Modification ou creation de la base de test ---> END OK"
 
 ## —— Docker prod 🚀🚀🚀🚀 🐳 🎉🎉🎉🎉 —————————————————————————————————————————————————
