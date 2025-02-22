@@ -1,4 +1,6 @@
 api/bin
 api/obj
 api/.env
+api/appsettings.Development.json
+api/appsettings.Production.json
 .env
