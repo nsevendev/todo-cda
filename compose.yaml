@@ -9,7 +9,7 @@ services:
     depends_on:
       - todo-cda-db
     volumes:
-      - ./api:/app:delegate
+      - .:/app:delegate
     networks:
       - traefik-nseven
       - todo-cda
