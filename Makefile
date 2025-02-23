@@ -15,7 +15,7 @@ APP_CONT_API_DOT = $(DOCKER) exec $(NAME_CONT_API) $(DOT)
 
 # Misc
 .DEFAULT_GOAL = help
-.PHONY        : help build dev logs-api
+.PHONY        : help build dev logs sh down dotadd dotef update-test-db
 
 ## —— 🎵 🐳 Docker Makefile Todo-cda 🐳 🎵 —————————————————————————————————————————
 help: ## Outputs this help screen
