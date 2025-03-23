@@ -7,7 +7,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-nseven"
-      - "traefik.http.routers.todo-cda-php.rule=Host(`todo-cda.api.dev.local`)"
+      - "traefik.http.routers.todo-cda-php.rule=Host(`todo-cda.api.local`)"
       - "traefik.http.routers.todo-cda-php.entrypoints=websecure"
       - "traefik.http.routers.todo-cda-php.tls=true"
       - "traefik.http.routers.todo-cda-php.tls.certresolver=default"
@@ -15,7 +15,6 @@ services:
       - "traefik.http.services.todo-cda-php.loadbalancer.server.scheme=http"
     volumes:
       - ./:/app:delegated
-      - ./var:/app/var:delegated
       - ./frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
     environment:
@@ -28,19 +27,19 @@ services:
       - traefik-nseven
       - todo-cda-network
 
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
-  
+  ###> symfony/mercure-bundle ###
+  ###< symfony/mercure-bundle ###
+
   todo-cda-rabbitmq:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-nseven"
-      - "traefik.http.routers.todo-cda-rabbitmq.rule=Host(`todo-cda.r.dev.local`)"
+      - "traefik.http.routers.todo-cda-rabbitmq.rule=Host(`todo-cda.r.local`)"
       - "traefik.http.routers.todo-cda-rabbitmq.entrypoints=websecure"
       - "traefik.http.routers.todo-cda-rabbitmq.tls=true"
       - "traefik.http.routers.todo-cda-rabbitmq.tls.certresolver=default"
       - "traefik.http.services.todo-cda-rabbitmq.loadbalancer.server.port=15672"
-        
+
   todo-cda-worker:
     volumes:
       - ./:/app
