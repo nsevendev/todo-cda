@@ -21,20 +21,28 @@ class Xavier
         return $this->id;
     }
 
-    #[ORM\Column(type: 'string', name: 'firstname', nullable: false)]
-    private int $firstname;
+    #[ORM\Column(type: 'string', name: 'firstname', nullable: false, length: 25)]
+    private string $firstname;
 
-    public function firstname(): int
+    public function firstname(): string
     {
         return $this->firstname;
     }
 
-    #[ORM\Column(type: 'string', name: 'lastname', nullable: false, length: 255)]
+    #[ORM\Column(type: 'string', name: 'lastname', nullable: false, )]
     private string $lastname;
 
     public function lastname(): string
     {
         return $this->lastname;
+    }
+
+    #[ORM\Column(type: 'int', name: 'number', nullable: false, )]
+    private int $number;
+
+    public function number(): int
+    {
+        return $this->number;
     }
 
     #[ORM\Column(type: 'datetime_immutable', name: 'created_at', nullable: false)]
@@ -59,12 +67,13 @@ class Xavier
     }
 
     public function __construct(
-        int $status,
-        string $message,
+        string $firstname,
+        string $lastname,
+        int $number,
     ) {
         $this->id = Uuid::v7();
         $this->firstname = $firstname;
-        $this->lastname = $mlastname;
+        $this->lastname = $lastname;
         $this->number = $number;
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = $this->createdAt;
