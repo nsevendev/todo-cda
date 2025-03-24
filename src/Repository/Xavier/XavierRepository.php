@@ -24,10 +24,10 @@ class XavierRepository extends ServiceEntityRepository
 
     public function remove(string $id): void
     {
-        $ping = $this->find($id);
-        if (null !== $ping) {
-            $this->getEntityManager()->remove($ping);
-            $this->save($ping);
+        $xavier = $this->find($id);
+        if (null !== $xavier) {
+            $this->getEntityManager()->remove($xavier);
+            $this->save($xavier);
         }
     }
 }
