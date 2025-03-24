@@ -29,7 +29,7 @@ class Xavier
         return $this->firstname;
     }
 
-    #[ORM\Column(type: 'string', name: 'lastname', nullable: false, )]
+    #[ORM\Column(type: 'string', name: 'lastname', nullable: false, length: 25)]
     private string $lastname;
 
     public function lastname(): string
@@ -37,7 +37,7 @@ class Xavier
         return $this->lastname;
     }
 
-    #[ORM\Column(type: 'int', name: 'number', nullable: false, )]
+    #[ORM\Column(type: 'int', name: 'number', nullable: false)]
     private int $number;
 
     public function number(): int
