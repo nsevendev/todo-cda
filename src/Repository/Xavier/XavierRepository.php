@@ -7,7 +7,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Tocda\Entity\Xavier\Xavier;
 
 /**
- * @extends ServiceEntityRepository<Ping>
+ * @extends ServiceEntityRepository<Xavier>
  */
 class XavierRepository extends ServiceEntityRepository
 {
