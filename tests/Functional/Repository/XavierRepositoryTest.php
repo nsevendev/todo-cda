@@ -18,7 +18,7 @@ use Tocda\Tests\Functional\TocdaFunctionalTestCase;
 ]
 class XavierRepositoryTest extends TocdaFunctionalTestCase
 {
-    private XavierRepository $xavierRepository;
+    private XavierRepository $xavierRepository; // Type XavierRepository puis propriétéxavierRepository
 
     /**
      * @throws Exception
@@ -30,7 +30,7 @@ class XavierRepositoryTest extends TocdaFunctionalTestCase
 
         /** @var XavierRepository $repository */
         $repository = self::getContainer()->get(XavierRepository::class);
-        $this->xavierRepository = $repository;
+        $this->xavierRepository = $repository; // Attribue le repository de Xavier à la propriété $xavierRepository
     }
 
     /**
@@ -55,13 +55,12 @@ class XavierRepositoryTest extends TocdaFunctionalTestCase
         $this->persistAndFlush($xavier);
 
         /** @var Xavier|null $found */
-        $found = $this->xavierRepository->find($xavier->id());
+        $found = $this->xavierRepository->find($xavier->id()); // Appelle la méthode find de XavierRepository avec l'id de $xavier en bdd
 
         self::assertNotNull($found, 'XavierEntity non trouvé en base alors qu’on vient de le créer');
         self::assertSame('John', $found->firstname());
         self::assertSame('Doe', $found->lastname());
         self::assertSame(0, $found->number());
-
     }
 
     public function testPersitAndFlushWithRepository(): void
