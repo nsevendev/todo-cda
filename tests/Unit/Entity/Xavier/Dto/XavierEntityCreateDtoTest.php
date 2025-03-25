@@ -12,7 +12,7 @@ use Tocda\Entity\Xavier\ValueObject\XavierNumber;
 use Tocda\Tests\Faker\Dto\Xavier\XavierCreateDtoFaker;
 use Tocda\Tests\Unit\TocdaUnitTestCase;
 
-#[CoversClass(XavierCreateDto::class), CoversClass(XavierFirstname::class), CoversClass(XavierLastname::class), CoverClass(XavierNumber::class)]
+#[CoversClass(XavierCreateDto::class), CoversClass(XavierFirstname::class), CoversClass(XavierLastname::class), CoversClass(XavierNumber::class)]
 class XavierEntityCreateDtoTest extends TocdaUnitTestCase
 {
     public function testXavierEntityCreateDto(): void
@@ -20,43 +20,31 @@ class XavierEntityCreateDtoTest extends TocdaUnitTestCase
         $xavierEntityCreateDto = XavierCreateDtoFaker::new();
 
         self::assertNotNull($xavierEntityCreateDto);
-
         self::assertInstanceOf(XavierCreateDto::class, $xavierEntityCreateDto);
         self::assertInstanceOf(XavierFirstname::class, $xavierEntityCreateDto->firstname());
         self::assertInstanceOf(XavierLastname::class, $xavierEntityCreateDto->lastname());
         self::assertInstanceOf(XavierNumber::class, $xavierEntityCreateDto->number());
 
+        // var_dump($xavierEntityCreateDto->firstname()->value()); // 🔍 Ajout du debug
+        // die(); // Stoppe l'exécution ici
+
         self::assertSame('John', (string) $xavierEntityCreateDto->firstname()->value());
-        self::assertSame('Le firstname à réussi en faker', (string) $xavierEntityCreateDto->firstname()->value());
-
         self::assertSame('Doe', (string) $xavierEntityCreateDto->lastname());
-        self::assertSame('Le lastname à réussi en faker', (string) $xavierEntityCreateDto->lastname());
-
-        self::assertSame(0, $xavierEntityCreateDto->number());
-        self::assertSame('Le number à réussi en faker', $xavierEntityCreateDto->number());
+        self::assertSame(0, $xavierEntityCreateDto->number()->value());
     }
 
     public function testXavierEntityCreateDtoWithFunctionNew(): void
     {
-        $xavierEntityCreateDto = XavierCreateDto::new(
-            200,
-            'Le ping à réussi en faker'
-        );
+        $xavierEntityCreateDto = XavierCreateDto::new('John', 'Doe', 0);
 
         self::assertNotNull($xavierEntityCreateDto);
-
         self::assertInstanceOf(XavierCreateDto::class, $xavierEntityCreateDto);
         self::assertInstanceOf(XavierFirstname::class, $xavierEntityCreateDto->firstname());
         self::assertInstanceOf(XavierLastname::class, $xavierEntityCreateDto->lastname());
         self::assertInstanceOf(XavierNumber::class, $xavierEntityCreateDto->number());
 
         self::assertSame('John', (string) $xavierEntityCreateDto->firstname()->value());
-        self::assertSame('Le firstname à réussi en faker', (string) $xavierEntityCreateDto->firstname()->value());
-
         self::assertSame('Doe', (string) $xavierEntityCreateDto->lastname());
-        self::assertSame('Le lastname à réussi en faker', (string) $xavierEntityCreateDto->message());
-
-        self::assertSame(0, $xavierEntityCreateDto->number());
-        self::assertSame('Le number à réussi en faker', $xavierEntityCreateDto->number());
+        self::assertSame(0, $xavierEntityCreateDto->number()->value());
     }
 }

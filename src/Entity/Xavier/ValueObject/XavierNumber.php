@@ -15,7 +15,6 @@ readonly class XavierNumber implements Stringable, ValueObjectInterface
      */
     public function __construct(
         #[Assert\NotBlank(message: 'La valeur ne peut pas être vide.')]
-        #[Assert\Choice(choices: [200, 300, 400], message: 'Le number doit être l\'une des valeurs suivantes : {{ choices }}')]
         private int $value,
     ) {}
 

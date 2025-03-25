@@ -12,22 +12,22 @@ readonly class XavierLastname implements Stringable, ValueObjectInterface
 {
     public function __construct(
         #[Assert\NotBlank(lastname: 'Le lastname est requis.')]
-        #[Assert\Choice(lastname: ['Doe'], message: 'Le lastname doit être de {{ choices }}')]
-        private int $value,
+        #[Assert\Length(max: 25, maxLastname: 'Le lastname doit contenir {{ limit }} caractères maximum.')]
+        private string $value,
     ) {}
 
     public static function fromValue(string|int|float|bool $value): self
     {
-        return new self(value: (int) $value);
+        return new self(value: (string) $value);
     }
 
-    public function value(): int
+    public function value(): string
     {
         return $this->value;
     }
 
     public function __toString(): string
     {
-        return (string) $this->value;
+        return $this->value;
     }
 }

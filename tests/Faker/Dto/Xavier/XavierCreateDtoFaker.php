@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Tocda\Tests\Faker\Dto\Xavier;
 
 use Tocda\Entity\Xavier\Dto\XavierCreateDto;
-use Tocda\Entity\Xavier\ValueObject\XavierMessage;
-use Tocda\Entity\Xavier\ValueObject\XavierStatus;
+use Tocda\Entity\Xavier\ValueObject\XavierFirstname;
+use Tocda\Entity\Xavier\ValueObject\XavierLastname;
+use Tocda\Entity\Xavier\ValueObject\XavierNumber;
 
 class XavierCreateDtoFaker
 {
