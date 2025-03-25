@@ -25,8 +25,8 @@ class XavierEntityCreateDtoTest extends TocdaUnitTestCase
         self::assertInstanceOf(XavierLastname::class, $xavierEntityCreateDto->lastname());
         self::assertInstanceOf(XavierNumber::class, $xavierEntityCreateDto->number());
 
-        // var_dump($xavierEntityCreateDto->firstname()->value()); // 🔍 Ajout du debug
-        // die(); // Stoppe l'exécution ici
+        // var_dump($xavierEntityCreateDto->firstname()->value()); 
+        // die();
 
         self::assertSame('John', (string) $xavierEntityCreateDto->firstname()->value());
         self::assertSame('Doe', (string) $xavierEntityCreateDto->lastname());
