@@ -11,8 +11,9 @@ use Tocda\Infrastructure\Shared\Type\ValueObjectInterface;
 readonly class XavierFirstname implements Stringable, ValueObjectInterface
 {
     public function __construct(
-        #[Assert\NotBlank(firstname: 'Le firstname est requis.')]
-        #[Assert\Length(max: 25, maxFirstname: 'Le firstname doit contenir {{ limit }} caractères maximum.')]
+        #[Assert\NotBlank(message: 'La valeur ne peut pas être vide.')]
+        #[Assert\Length(max: 25, maxMessage: 'Le firstname doit contenir {{ limit }} caractères maximum.')]
+
         private string $value,
     ) {}
 

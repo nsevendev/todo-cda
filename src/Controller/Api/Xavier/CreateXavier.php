@@ -34,7 +34,7 @@ class CreateXavier extends AbstractTocdaController
         $dto = $this->deserializeAndValidate(
             data: $request->getContent(),
             dtoClass: XavierCreateDto::class,
-            fnException: fn(array $errors) => new XavierInvalidArgumentException(
+            fnException: fn (array $errors) => new XavierInvalidArgumentException(
                 getMessage: 'Erreur de validation',
                 errors: $errors
             )

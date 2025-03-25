@@ -10,9 +10,6 @@ use Tocda\Infrastructure\Shared\Type\ValueObjectInterface;
 
 readonly class XavierNumber implements Stringable, ValueObjectInterface
 {
-    /**
-     * @param int $value
-     */
     public function __construct(
         #[Assert\NotBlank(message: 'La valeur ne peut pas être vide.')]
         private int $value,
@@ -20,8 +17,6 @@ readonly class XavierNumber implements Stringable, ValueObjectInterface
 
     /**
      * Crée un objet XavierNumber à partir d'une valeur.
-     * 
-     * @param string|int|float|bool $value
      */
     public static function fromValue(string|int|float|bool $value): self
     {
@@ -31,8 +26,6 @@ readonly class XavierNumber implements Stringable, ValueObjectInterface
 
     /**
      * Retourne la valeur stockée.
-     * 
-     * @return int
      */
     public function value(): int
     {
@@ -41,8 +34,6 @@ readonly class XavierNumber implements Stringable, ValueObjectInterface
 
     /**
      * Conversion en chaîne de caractères.
-     * 
-     * @return string
      */
     public function __toString(): string
     {
