@@ -8,6 +8,11 @@ use Doctrine\DBAL\Exception;
 use PHPUnit\Framework\Attributes\CoversClass;
 use ReflectionException;
 use Tocda\Entity\Ping\Ping;
+use Tocda\Entity\Ping\ValueObject\PingMessage;
+use Tocda\Entity\Ping\ValueObject\PingStatus;
+use Tocda\Infrastructure\ApiResponse\Exception\Custom\Ping\PingInvalidArgumentException;
+use Tocda\Infrastructure\Doctrine\Types\Ping\PingMessageType;
+use Tocda\Infrastructure\Doctrine\Types\Ping\PingStatusType;
 use Tocda\Repository\Ping\PingRepository;
 use Tocda\Tests\Faker\Entity\Ping\PingFaker;
 use Tocda\Tests\Functional\TocdaFunctionalTestCase;
@@ -15,6 +20,10 @@ use Tocda\Tests\Functional\TocdaFunctionalTestCase;
 #[
     CoversClass(PingRepository::class),
     CoversClass(Ping::class),
+    CoversClass(PingMessage::class),
+    CoversClass(PingMessageType::class),
+    CoversClass(PingStatus::class),
+    CoversClass(PingStatusType::class),
 ]
 class PingRepositoryTest extends TocdaFunctionalTestCase
 {
@@ -47,6 +56,7 @@ class PingRepositoryTest extends TocdaFunctionalTestCase
 
     /**
      * @throws ReflectionException
+     * @throws PingInvalidArgumentException
      */
     public function testWeCanPersistAndFindPing(): void
     {
@@ -58,9 +68,8 @@ class PingRepositoryTest extends TocdaFunctionalTestCase
         $found = $this->pingRepository->find($ping->id());
 
         self::assertNotNull($found, 'PingEntity non trouvé en base alors qu’on vient de le créer');
-        self::assertSame(200, $found->status());
-        self::assertSame('Le ping à réussi', $found->message());
-
+        self::assertSame(200, $found->status()->value());
+        self::assertSame('Le ping à réussi', $found->message()->value());
     }
 
     public function testPersitAndFlushWithRepository(): void
@@ -73,7 +82,7 @@ class PingRepositoryTest extends TocdaFunctionalTestCase
         $found = $this->pingRepository->find($ping->id());
 
         self::assertNotNull($found, 'PingEntity non trouvé en base alors qu’on vient de le créer');
-        self::assertSame(200, $found->status());
-        self::assertSame('Le ping à réussi', $found->message());
+        self::assertSame(200, $found->status()->value());
+        self::assertSame('Le ping à réussi', $found->message()->value());
     }
 }

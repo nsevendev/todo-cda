@@ -6,7 +6,7 @@ namespace Tocda\Entity\Ping\Dto;
 
 use Tocda\Entity\Ping\Ping;
 
-class PingDto
+class PingPublishDeletedDto
 {
     public function __construct(
         public string $id,
@@ -28,22 +28,6 @@ class PingDto
     }
 
     /**
-     * @param Ping[] $data
-     *
-     * @return PingDto[]
-     */
-    public static function toListPing(array $data): array
-    {
-        $listPing = [];
-
-        foreach ($data as $ping) {
-            $listPing[] = self::fromArray($ping);
-        }
-
-        return $listPing;
-    }
-
-    /**
      * @return array<string, mixed>
      */
     public function toArray(): array
@@ -52,6 +36,7 @@ class PingDto
             'id' => $this->id,
             'status' => $this->status,
             'message' => $this->message,
+            'delete' => 'true',
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ];

@@ -12,6 +12,8 @@ use Tocda\Entity\Ping\Dto\PingDto;
 use Tocda\Entity\Ping\Ping;
 use Tocda\Entity\Ping\ValueObject\PingMessage;
 use Tocda\Entity\Ping\ValueObject\PingStatus;
+use Tocda\Infrastructure\Doctrine\Types\Ping\PingMessageType;
+use Tocda\Infrastructure\Doctrine\Types\Ping\PingStatusType;
 use Tocda\Infrastructure\Mercure\MercurePublish;
 use Tocda\Message\Command\Ping\CreatePingCommand;
 use Tocda\Message\Command\Ping\CreatePingHandler;
@@ -29,7 +31,9 @@ use Zenstruck\Messenger\Test\InteractsWithMessenger;
     CoversClass(PingStatus::class),
     CoversClass(CreatePingHandler::class),
     CoversClass(MercurePublish::class),
-    CoversClass(PingDto::class)
+    CoversClass(PingDto::class),
+    CoversClass(PingMessageType::class),
+    CoversClass(PingStatusType::class),
 ]
 class CreatePingHandlerTest extends TocdaFunctionalTestCase
 {
@@ -63,9 +67,6 @@ class CreatePingHandlerTest extends TocdaFunctionalTestCase
         }
     }
 
-    /**
-     * @throws Exception
-     */
     public function testDoctrineConfiguration(): void
     {
         $connection = self::getEntityManager()->getConnection();
@@ -79,13 +80,9 @@ class CreatePingHandlerTest extends TocdaFunctionalTestCase
     {
         $bus = self::getContainer()->get('messenger.default_bus');
         $dto = PingCreateDtoFaker::new();
-        // $handler = new CreatePingEntityHandler($this->repository);
         $command = new CreatePingCommand($dto);
-        // $handler($command);
         $bus->dispatch($command);
         $this->flush();
-
-        // $pings = $this->repository->findAll();
 
         $this->transport('async')->queue()->assertNotEmpty();
         $m = $this->transport('async')->queue()->messages();
