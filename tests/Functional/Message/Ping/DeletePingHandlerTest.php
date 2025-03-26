@@ -2,13 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Tocda\Tests\Functional\Message\Ping;
+namespace Functional\Message\Ping;
 
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\Uid\Uuid;
 use Tocda\Controller\Api\Ping\DeletePing;
+use Tocda\Entity\Ping\Dto\PingPublishDeletedDto;
 use Tocda\Entity\Ping\Ping;
+use Tocda\Entity\Ping\ValueObject\PingMessage;
+use Tocda\Entity\Ping\ValueObject\PingStatus;
+use Tocda\Infrastructure\ApiResponse\Exception\Custom\AbstractApiResponseException;
+use Tocda\Infrastructure\ApiResponse\Exception\Custom\Ping\PingBadRequestException;
+use Tocda\Infrastructure\ApiResponse\Exception\Error\Error;
+use Tocda\Infrastructure\Doctrine\Types\Ping\PingMessageType;
+use Tocda\Infrastructure\Doctrine\Types\Ping\PingStatusType;
+use Tocda\Infrastructure\Mercure\MercurePublish;
 use Tocda\Message\Command\Ping\DeletePingCommand;
 use Tocda\Message\Command\Ping\DeletePingHandler;
 use Tocda\Repository\Ping\PingRepository;
@@ -22,6 +33,15 @@ use Zenstruck\Messenger\Test\InteractsWithMessenger;
     CoversClass(DeletePing::class),
     CoversClass(DeletePingCommand::class),
     CoversClass(DeletePingHandler::class),
+    CoversClass(MercurePublish::class),
+    CoversClass(PingPublishDeletedDto::class),
+    CoversClass(AbstractApiResponseException::class),
+    CoversClass(PingBadRequestException::class),
+    CoversClass(Error::class),
+    CoversClass(PingMessage::class),
+    CoversClass(PingMessageType::class),
+    CoversClass(PingStatus::class),
+    CoversClass(PingStatusType::class),
 ]
 class DeletePingHandlerTest extends TocdaFunctionalTestCase
 {
@@ -32,6 +52,8 @@ class DeletePingHandlerTest extends TocdaFunctionalTestCase
     private PingRepository $repository;
 
     private DeletePingHandler $handler;
+
+    // private MercurePublish $mercurePublish;
 
     /**
      * @throws Exception
@@ -57,9 +79,6 @@ class DeletePingHandlerTest extends TocdaFunctionalTestCase
         }
     }
 
-    /**
-     * @throws Exception
-     */
     public function testDoctrineConfiguration(): void
     {
         $connection = self::getEntityManager()->getConnection();
@@ -73,13 +92,23 @@ class DeletePingHandlerTest extends TocdaFunctionalTestCase
         $this->entityManager->persist($ping);
         $this->entityManager->flush();
 
-        $this->handler = new DeletePingHandler($this->repository);
-        $this->transport('othersync')->send(new DeletePingCommand($ping->id()->toString()));
+        $bus = self::getContainer()->get('messenger.default_bus');
+        $command = new DeletePingCommand($ping->id()->toString());
+        $bus->dispatch($command);
         $this->flush();
 
-        $this->transport('othersync')->queue()->assertNotEmpty();
-        $this->transport('othersync')->queue()->assertCount(1);
+        $this->transport('async')->queue()->assertNotEmpty();
+        $this->transport('async')->queue()->assertCount(1);
+        $this->transport('async')->process(1);
+        $this->transport('async')->queue()->assertCount(0);
+    }
+
+    public function testDeletePingNotExist(): void
+    {
+        $this->expectException(HandlerFailedException::class);
+        $id = Uuid::v7()->toString();
+        $this->transport('othersync')->send(new DeletePingCommand($id));
         $this->transport('othersync')->process(1);
-        $this->transport('othersync')->queue()->assertCount(0);
+        $this->transport('othersync')->catchExceptions();
     }
 }

@@ -1,14 +1,14 @@
 framework:
     messenger:
         default_bus: command.bus
-        
+
         buses:
             command.bus: ~
             query.bus: ~
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            async: "%env(MESSENGER_TRANSPORT_DSN)%"
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
@@ -24,7 +24,8 @@ when@test:
                 # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
                 async: test://
                 sync: sync://
-                othersync: test://
+                #othersync: test://
+                othersync: test://?catch_exceptions=false
             routing:
-                '*': async
+                "*": async
                 'Tocda\Message\Query\*': sync
