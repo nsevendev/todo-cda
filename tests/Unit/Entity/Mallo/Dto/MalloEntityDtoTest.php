@@ -37,4 +37,36 @@ class MalloEntityDtoTest extends TocdaUnitTestCase
         self::assertNotNull($malloDto->updatedAt);
         self::assertNotNull($malloDto->id);
     }
+
+    public function testMalloDtoToArray(): void
+    {
+        $malloEntity = MalloFaker::new();
+
+        self::assertNotNull($malloEntity);
+        self::assertInstanceOf(Mallo::class, $malloEntity);
+
+        $malloDto = MalloDto::fromArray($malloEntity);
+
+        self::assertNotNull($malloDto);
+        self::assertInstanceOf(MalloDto::class, $malloDto);
+
+        $malloArray = $malloDto->toArray();
+
+        self::assertIsArray($malloArray, 'MalloDto::toArray() should return an array');
+
+        self::assertCount(6, $malloArray, 'Your array should have 6 elements');
+        self::assertArrayHasKey('id', $malloArray, 'Your array should have an id key');
+        self::assertArrayHasKey('firstname', $malloArray, 'Your array should have a firstname key');
+        self::assertArrayHasKey('lastname', $malloArray, 'Your array should have a lastname key');
+        self::assertArrayHasKey('number', $malloArray, 'Your array should have a number key');
+        self::assertArrayHasKey('createdAt', $malloArray, 'Your array should have a createdAt key');
+        self::assertArrayHasKey('updatedAt', $malloArray, 'Your array should have an updatedAt key');
+
+        self::assertSame($malloDto->id, $malloArray['id'], 'Both values are differents');
+        self::assertSame($malloDto->firstname, $malloArray['firstname'], 'Both values are differents');
+        self::assertSame($malloDto->lastname, $malloArray['lastname'], 'Both values are differents');
+        self::assertSame($malloDto->number, $malloArray['number'], 'Both values are differents');
+        self::assertSame($malloDto->createdAt, $malloArray['createdAt'], 'Both values are differents');
+        self::assertSame($malloDto->updatedAt, $malloArray['updatedAt'], 'Both values are differents');
+    }
 }
