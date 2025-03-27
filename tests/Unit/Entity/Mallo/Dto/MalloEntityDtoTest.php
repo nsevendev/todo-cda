@@ -7,6 +7,7 @@ namespace Tocda\Tests\Unit\Entity\Mallo\Dto;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tocda\Entity\Mallo\Dto\MalloDto;
 use Tocda\Entity\Mallo\Mallo;
+use Tocda\Tests\Faker\Dto\Mallo\MalloDtoFaker;
 use Tocda\Tests\Faker\Entity\Mallo\MalloFaker;
 use Tocda\Tests\Unit\TocdaUnitTestCase;
 
@@ -68,5 +69,62 @@ class MalloEntityDtoTest extends TocdaUnitTestCase
         self::assertSame($malloDto->number, $malloArray['number'], 'Both values are differents');
         self::assertSame($malloDto->createdAt, $malloArray['createdAt'], 'Both values are differents');
         self::assertSame($malloDto->updatedAt, $malloArray['updatedAt'], 'Both values are differents');
+    }
+
+    public function testMalloDtoToListMallo(): void
+    {
+        // Créer 3 variables contenant chacune une instance de la classe Mallo
+
+        $mallo1 = new Mallo(
+            firstname: 'Mathis',
+            lastname: 'Boisson',
+            number: 31,
+        );
+
+        $mallo2 = new Mallo(
+            firstname: 'Tom',
+            lastname: 'Varet',
+            number: 04,
+        );
+
+        $mallo3 = new Mallo(
+            firstname: 'Lilou',
+            lastname: 'Drissi',
+            number: 29,
+        );
+
+        self::assertInstanceOf(Mallo::class, $mallo1);
+        self::assertInstanceOf(Mallo::class, $mallo2);
+        self::assertInstanceOf(Mallo::class, $mallo3);
+
+        // Mettre ces 3 variables dans un tableau
+
+        $malloArray = [$mallo1, $mallo2, $mallo3];
+
+        self::assertIsArray($malloArray);
+
+        // Créer une variable contenant une instance de la classe MalloDto
+
+        $malloDto = MalloDtoFaker::new();
+
+        self::assertInstanceOf(MalloDto::class, $malloDto);
+
+        // Appeler la méthode toListMallo avec le tableau en argument
+
+        $listMallo = $malloDto::toListMallo($malloArray);
+
+        // Verifier que $listMallo est un tableau
+
+        self::assertIsArray($listMallo);
+
+        // Verifier que $listMallo contient 3 éléments
+
+        self::assertCount(3, $listMallo);
+
+        // Verifier que chaque élément de $listMallo est une instance de la classe MalloDto
+
+        self::assertInstanceOf(MalloDto::class, $listMallo[0]);
+        self::assertInstanceOf(MalloDto::class, $listMallo[1]);
+        self::assertInstanceOf(MalloDto::class, $listMallo[2]);
     }
 }
