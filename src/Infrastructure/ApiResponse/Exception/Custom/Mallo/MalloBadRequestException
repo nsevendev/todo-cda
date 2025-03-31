@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tocda\Infrastructure\ApiResponse\Exception\Custom\Ping;
+namespace Tocda\Infrastructure\ApiResponse\Exception\Custom\Mallo;
 
 use Symfony\Component\HttpFoundation\Response;
 use Tocda\Infrastructure\ApiResponse\Exception\Custom\AbstractApiResponseException;
 use Tocda\Infrastructure\ApiResponse\Exception\Error\Error;
 
-class PingBadRequestException extends AbstractApiResponseException
+class MalloBadRequestException extends AbstractApiResponseException
 {
     /**
      * @param array<Error>|null $errors

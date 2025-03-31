@@ -83,12 +83,12 @@ class MalloRepositoryTest extends TocdaFunctionalTestCase
     {
         $mallo = MalloFaker::new();
 
-        $this->malloRepository->save($mallo);
+        $this->malloRepository->save($mallo); // save est une méthode de la propriété malloRepository de la classe dans la quelle on se trouve
         $this->malloRepository->remove((string) $mallo->id()); // On appelle la méthode remove de MalloRepository avec l'id de $mallo en paramètre
 
         /** @var Mallo|null $found */
         $found = $this->malloRepository->find($mallo->id()); // On appelle la méthode find de MalloRepository avec l'id de $mallo en paramètre
 
-        self::assertNotNull($found, 'MalloEntity trouvé en base alors qu’on vient de le supprimer');
+        self::assertNull($found, 'MalloEntity trouvé en base alors qu’on vient de le supprimer');
     }
 }

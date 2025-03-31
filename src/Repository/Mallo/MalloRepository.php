@@ -25,9 +25,11 @@ class MalloRepository extends ServiceEntityRepository
     public function remove(string $id): void
     {
         $mallo = $this->find($id);
-        if (null !== $mallo) {
+        if (null !== $mallo) { 
             $this->getEntityManager()->remove($mallo);
-            $this->save($mallo);
+            $this->getEntityManager()->flush();
+
+            $test = $this->find($id); 
         }
     }
 }

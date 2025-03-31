@@ -24,19 +24,19 @@ readonly class CreatePingHandler
      */
     public function __invoke(CreatePingCommand $command): void
     {
-        $ping = new Ping(
-            status: $command->pingEntityCreateDto->status()->value(),
+        $ping = new Ping( 
+            status: $command->pingEntityCreateDto->status()->value(), 
             message: $command->pingEntityCreateDto->message()->value()
         );
 
-        $this->pingEntityRepository->save(
+        $this->pingEntityRepository->save( // Appel de la méthode save de la classe PingRepository
             ping: $ping
         );
 
-        $pingDto = PingDto::fromArray($ping);
+        $pingDto = PingDto::fromArray($ping); // 
 
-        $this->mercurePublish->publish(
-            topic: '/ping-created',
+        $this->mercurePublish->publish( 
+            topic: '/ping-created', 
             data: $pingDto->toArray()
         );
     }

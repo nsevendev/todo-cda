@@ -16,9 +16,9 @@ class MalloEntityDtoTest extends TocdaUnitTestCase
 {
     public function testMalloDtoFromArray(): void
     {
-        $malloEntity = MalloFaker::new();
+        $malloEntity = MalloFaker::new(); 
 
-        self::assertSame('Mallo', $malloEntity->firstname());
+        self::assertSame('Mallo', $malloEntity->firstname()); 
         self::assertSame('Zimmermann', $malloEntity->lastname());
         self::assertSame(67, $malloEntity->number());
 
@@ -41,12 +41,12 @@ class MalloEntityDtoTest extends TocdaUnitTestCase
 
     public function testMalloDtoToArray(): void
     {
-        $malloEntity = MalloFaker::new();
+        $malloEntity = MalloFaker::new(); 
 
         self::assertNotNull($malloEntity);
         self::assertInstanceOf(Mallo::class, $malloEntity);
 
-        $malloDto = MalloDto::fromArray($malloEntity);
+        $malloDto = MalloDto::fromArray($malloEntity); 
 
         self::assertNotNull($malloDto);
         self::assertInstanceOf(MalloDto::class, $malloDto);

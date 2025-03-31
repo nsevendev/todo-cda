@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tocda\Entity\Mallo\Dto;
+namespace Tocda\Entity\Mallo\Dto; 
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Tocda\Entity\Mallo\ValueObject\MalloFirstname;
@@ -17,10 +17,10 @@ readonly class MalloCreateDto // "readonly" = rend l'élément  non mutable (imm
         #[Assert\Valid]
         private MalloLastname $lastname,
         #[Assert\Valid]
-        private MalloNumber $number,
+        private MalloNumber $number, 
     ) {}
 
-    public static function new(string $firstname, string $lastname, int $number): self
+    public static function new(string $firstname, string $lastname, int $number): self 
     {
         return new self(
             firstname: MalloFirstname::fromValue($firstname), // Appelle la méthode fromValue de la classe PingStatus avec $status en paramètre
@@ -29,17 +29,17 @@ readonly class MalloCreateDto // "readonly" = rend l'élément  non mutable (imm
         );
     }
 
-    public function firstname(): MalloFirstname // Fonction qui retourne le firstname
+    public function firstname(): MalloFirstname // Fonction qui retourne le firstname 
     {
-        return $this->firstname; // On retourne la valeur firstname de la class
+        return $this->firstname; // On retourne le firstname
     }
 
-    public function lastname(): MalloLastname // Pareil qu'au dessus me fais pas répéter stp
+    public function lastname(): MalloLastname 
     {
         return $this->lastname;
     }
 
-    public function number(): MalloNumber // Pareil qu'au dessus me fais pas répéter stp
+    public function number(): MalloNumber 
     {
         return $this->number;
     }
