@@ -68,13 +68,13 @@ class DeleteMalloHandlerTest extends TocdaFunctionalTestCase
 
     public function testDeleteMallo(): void
     {
-        $ping = MalloFaker::new();
+        $mallo = MalloFaker::new();
 
-        $this->entityManager->persist($ping);
+        $this->entityManager->persist($mallo);
         $this->entityManager->flush();
 
         $this->handler = new DeleteMalloHandler($this->repository);
-        $this->transport('othersync')->send(new DeleteMalloCommand($ping->id()->toString()));
+        $this->transport('othersync')->send(new DeleteMalloCommand($mallo->id()->toString()));
         $this->flush();
 
         $this->transport('othersync')->queue()->assertNotEmpty();
