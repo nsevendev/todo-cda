@@ -18,10 +18,10 @@ class PingDto // Nouvelle class PingDto
 
     public static function fromArray(Ping $data): self // fromArray = fonction statique de la class Ping ? $data = argument ? (je veux comprendre pcq ça j'ai du mal)
     {
-        return new self( // On retourne un nouveau soi de la class PingDto
-            id: (string) $data->id(), // le string qu'on met pour dire que id est un type string... $data = pas argument mais c'est quoi du coup ?
-            status: $data->status(),
-            message: $data->message(),
+        return new self(
+            id: (string) $data->id(),
+            status: $data->status()->value(),
+            message: $data->message()->value(),
             createdAt: $data->createdAt()->format('Y-m-d H:i:s'),
             updatedAt: $data->updatedAt()->format('Y-m-d H:i:s'),
         );
