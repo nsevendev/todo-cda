@@ -7,7 +7,6 @@ namespace Tocda\Tests\Functional\Controller\Api\Mallo;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport;
 use Tocda\Controller\Api\Mallo\CreateMallo;
 use Tocda\Entity\Mallo\Dto\MalloCreateDto;
 use Tocda\Entity\Mallo\ValueObject\MalloFirstname;

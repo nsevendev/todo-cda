@@ -12,7 +12,7 @@ readonly class MalloNumber implements Stringable, ValueObjectInterface
 {
     public function __construct(
         #[Assert\NotBlank(message: 'Le number est requis.')]
-        // #[Assert\Length(max: 255, maxMessage: 'Le message doit contenir au plus {{ limit }} caractères.')]
+        #[Assert\Range(min: 0, max: 100, notInRangeMessage: 'Le message doit contenir au plus {{ limit }} caractères.')]
         private int $value,
     ) {}
 
