@@ -17,30 +17,30 @@ use Tocda\Infrastructure\ApiResponse\Exception\Custom\Ping\PingInvalidArgumentEx
 use Tocda\Infrastructure\Controller\AbstractTocdaController;
 use Tocda\Message\Command\Ping\CreatePingCommand;
 
-#[AsController]
-class CreatePing extends AbstractTocdaController
+#[AsController] // #[AsController] est un attribut de classe qui permet de définir une classe comme contrôleur
+class CreatePing extends AbstractTocdaController // class CreatePing qui hérite de AbstractTocdaController
 {
     /**
      * @throws ExceptionInterface
      * @throws PingInvalidArgumentException
      * @throws Throwable
      */
-    #[Route(path: '/api/ping', name: 'tocda_api_create_ping', methods: ['POST'])]
-    public function __invoke(
-        Request $request,
+    #[Route(path: '/api/ping', name: 'tocda_api_create_ping', methods: ['POST'])] // methode POST donc Create
+    public function __invoke(// __invoke est une méthode de la classe CreatePing
+        Request $request, // Request
         MessageBusInterface $commandBus,
-    ): Response {
+    ): Response { // Retourne une instance de la classe Response
         /** @var PingCreateDto $dto */
-        $dto = $this->deserializeAndValidate(
-            data: $request->getContent(),
-            dtoClass: PingCreateDto::class,
-            fnException: fn (array $errors) => new PingInvalidArgumentException(
+        $dto = $this->deserializeAndValidate( // -> = appel de la méthode deserializeAndValidate
+            data: $request->getContent(), // -> récupère le contenu JSON envoyé dans la requête.
+            dtoClass: PingCreateDto::class, // dtoClass est une classe de PingCreateDto
+            fnException: fn (array $errors) => new PingInvalidArgumentException( // est une fonction fléchée (fn (...) => ...), qui retourne une PingInvalidArgumentException en cas d’erreurs de validation.
                 getMessage: 'Erreur de validation',
                 errors: $errors
             )
         );
 
-        $commandBus->dispatch(
+        $commandBus->dispatch( // Appel de la méthode dispatch de la classe MessageBusInterface methode utilisé pour envoyer une commande au bus de commande
             new CreatePingCommand(
                 pingEntityCreateDto: $dto
             )

@@ -6,7 +6,7 @@ namespace Tocda\Entity\Ping\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-readonly class PingCreateDto
+readonly class PingCreateDto // "readonly" = rend l'élément PingCreateDto non mutable (immutable)
 {
     public function __construct(
         #[Assert\NotBlank(message: 'Le status est requis.')]

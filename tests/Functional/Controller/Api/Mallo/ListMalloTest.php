@@ -2,35 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Tocda\Tests\Functional\Controller\Api\Ping;
+namespace Tocda\Tests\Functional\Controller\Api\Mallo;
 
-use Doctrine\DBAL\Exception;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Response;
-use Tocda\Controller\Api\Ping\ListPing;
-use Tocda\Entity\Ping\Dto\PingDto;
-use Tocda\Entity\Ping\Ping;
-use Tocda\Entity\Ping\ValueObject\PingMessage;
-use Tocda\Entity\Ping\ValueObject\PingStatus;
+use Tocda\Controller\Api\Mallo\ListMallo;
+use Tocda\Entity\Mallo\Dto\MalloDto;
+use Tocda\Entity\Mallo\Mallo;
 use Tocda\Infrastructure\ApiResponse\ApiResponse;
 use Tocda\Infrastructure\ApiResponse\ApiResponseFactory;
 use Tocda\Infrastructure\ApiResponse\Component\ApiResponseData;
 use Tocda\Infrastructure\ApiResponse\Component\ApiResponseLink;
 use Tocda\Infrastructure\ApiResponse\Component\ApiResponseMessage;
 use Tocda\Infrastructure\ApiResponse\Component\ApiResponseMeta;
-use Tocda\Infrastructure\ApiResponse\Exception\Custom\Ping\PingInvalidArgumentException;
 use Tocda\Infrastructure\ApiResponse\Exception\Error\ListError;
-use Tocda\Infrastructure\Doctrine\Types\Ping\PingMessageType;
-use Tocda\Infrastructure\Doctrine\Types\Ping\PingStatusType;
 use Tocda\Infrastructure\Serializer\TocdaSerializer;
-use Tocda\Message\Query\Ping\GetListPingHandler;
-use Tocda\Repository\Ping\PingRepository;
-use Tocda\Tests\Faker\Entity\Ping\PingFaker;
+use Tocda\Message\Query\Mallo\GetListMalloHandler;
+use Tocda\Repository\Mallo\MalloRepository;
+use Tocda\Tests\Faker\Entity\Mallo\MalloFaker;
 use Tocda\Tests\Functional\TocdaFunctionalTestCase;
 
 #[
-    CoversClass(ListPing::class),
+    CoversClass(ListMallo::class),
     CoversClass(ApiResponse::class),
     CoversClass(ApiResponseFactory::class),
     CoversClass(ApiResponseData::class),
@@ -38,17 +32,13 @@ use Tocda\Tests\Functional\TocdaFunctionalTestCase;
     CoversClass(ApiResponseMessage::class),
     CoversClass(ApiResponseMeta::class),
     CoversClass(ListError::class),
-    CoversClass(PingDto::class),
+    CoversClass(MalloDto::class),
     CoversClass(TocdaSerializer::class),
-    CoversClass(GetListPingHandler::class),
-    CoversClass(PingRepository::class),
-    CoversClass(Ping::class),
-    CoversClass(PingMessage::class),
-    CoversClass(PingMessageType::class),
-    CoversClass(PingStatus::class),
-    CoversClass(PingStatusType::class),
+    CoversClass(GetListMalloHandler::class),
+    CoversClass(MalloRepository::class),
+    CoversClass(Mallo::class)
 ]
-class ListPingTest extends TocdaFunctionalTestCase
+class ListMalloTest extends TocdaFunctionalTestCase
 {
     private KernelBrowser $client;
 
@@ -59,49 +49,45 @@ class ListPingTest extends TocdaFunctionalTestCase
 
     public function testInvokeReturnsExpectedResponse(): void
     {
-        $this->client->request('GET', '/api/list-ping');
+        $this->client->request('GET', '/api/list-mallo');
 
         $content = $this->client->getResponse()->getContent();
 
         self::assertResponseIsSuccessful();
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
-        self::assertJson((string) $content);
+        self::assertJson($content);
 
-        $response = json_decode((string) $content, true);
+        $response = json_decode($content, true);
 
         self::assertArrayHasKey('data', $response);
     }
 
-    /**
-     * @throws Exception
-     * @throws PingInvalidArgumentException
-     */
-    public function testCreateAndRetrievePing(): void
+    public function testCreateAndRetrieveMallo(): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->getConnection()->beginTransaction();
 
-        $ping = PingFaker::new();
+        $mallo = MalloFaker::new();
 
-        $entityManager->persist($ping);
+        $entityManager->persist($mallo);
         $entityManager->flush();
 
-        $this->client->request('GET', '/api/list-ping');
+        $this->client->request('GET', '/api/list-mallo');
 
         $content = $this->client->getResponse()->getContent();
 
         self::assertResponseIsSuccessful();
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
-        self::assertJson((string) $content);
+        self::assertJson($content);
 
-        $response = json_decode((string) $content, true);
-        self::assertIsArray($response);
+        $response = json_decode($content, true);
         self::assertArrayHasKey('data', $response);
         self::assertNotEmpty($response['data']);
 
-        $retrievedPing = $response['data'][0];
-        self::assertSame(200, $retrievedPing['status']);
-        self::assertSame("c'est bon", $retrievedPing['message']);
+        $retrievedMallo = $response['data'][0];
+        self::assertSame('Harry', $retrievedMallo['firstname']);
+        self::assertSame('Potter', $retrievedMallo['lastname']);
+        self::assertSame(13, $retrievedMallo['number']);
 
         $entityManager->rollback();
     }

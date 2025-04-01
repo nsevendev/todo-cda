@@ -33,7 +33,7 @@ readonly class CreatePingHandler
             message: PingMessage::fromValue($command->pingEntityCreateDto->message)
         );
 
-        $this->pingEntityRepository->save(
+        $this->pingEntityRepository->save( // Appel de la méthode save de la classe PingRepository
             ping: $ping
         );
 
