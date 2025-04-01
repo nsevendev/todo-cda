@@ -30,6 +30,8 @@ class CreateMallo extends AbstractTocdaController
         Request $request,
         MessageBusInterface $commandBus,
     ): Response {
+        var_dump("Ma requête" , $request);
+        var_dump("Mon CommandeBus" , $commandBus);
         /** @var MalloCreateDto $dto */
         $dto = $this->deserializeAndValidate(
             data: $request->getContent(),
@@ -42,12 +44,15 @@ class CreateMallo extends AbstractTocdaController
                 errors: $errors
             )
         );
+        var_dump("Mon DTO : ", $dto);
 
         $commandBus->dispatch(
             new CreateMalloCommand(
                 malloEntityCreateDto: $dto
             )
         );
+
+        var_dump("Mon Commande : ", $commandBus);
 
         return ApiResponseFactory::success(data: ['message' => 'La demande a été prise en compte.']);
     }

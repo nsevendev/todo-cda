@@ -24,18 +24,22 @@ readonly class CreateMalloHandler
      */
     public function __invoke(CreateMalloCommand $command): void
     {
+        var_dump("Ma commande : ", $command);
         $mallo = new Mallo(
             firstname: $command->malloEntityCreateDto->firstname()->value(),
             lastname: $command->malloEntityCreateDto->lastname()->value(),
             number: $command->malloEntityCreateDto->number()->value()
         );
-
+        
+        var_dump("Mon mallo : ", $mallo);
         $this->malloEntityRepository->save( // Appel de la méthode save de la classe MalloRepository
             mallo: $mallo
         );
 
         $malloDto = MalloDto::fromArray($mallo);
 
+        var_dump("Mon malloDto : ", $malloDto);
+        var_dump("Mon MalloDto ToArray : ", $malloDto->toArray());
         $this->mercurePublish->publish(
             topic: '/mallo-created',
             data: $malloDto->toArray()
