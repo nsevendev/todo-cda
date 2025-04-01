@@ -9,6 +9,6 @@ use Tocda\Entity\Mallo\Dto\MalloCreateDto;
 class CreateMalloCommand
 {
     public function __construct(
-        public MalloCreateDto $malloEntityCreateDto
+        public MalloCreateDto $malloEntityCreateDto,
     ) {}
 }

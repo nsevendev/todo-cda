@@ -86,7 +86,7 @@ class ListPingTest extends TocdaFunctionalTestCase
 
         $retrievedPing = $response['data'][0];
         self::assertSame(200, $retrievedPing['status']);
-        self::assertSame('Le ping à réussi', $retrievedPing['message']);
+        self::assertSame("c'est bon", $retrievedPing['message']);
 
         $entityManager->rollback();
     }

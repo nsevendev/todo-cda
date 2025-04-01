@@ -9,6 +9,6 @@ use Tocda\Entity\Ping\Dto\PingCreateDto;
 class CreatePingCommand
 {
     public function __construct(
-        public PingCreateDto $pingEntityCreateDto
+        public PingCreateDto $pingEntityCreateDto,
     ) {}
 }

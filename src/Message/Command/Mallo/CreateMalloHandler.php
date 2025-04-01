@@ -24,8 +24,8 @@ readonly class CreateMalloHandler
      */
     public function __invoke(CreateMalloCommand $command): void
     {
-        $mallo = new Mallo( 
-            firstname: $command->malloEntityCreateDto->firstname()->value(), 
+        $mallo = new Mallo(
+            firstname: $command->malloEntityCreateDto->firstname()->value(),
             lastname: $command->malloEntityCreateDto->lastname()->value(),
             number: $command->malloEntityCreateDto->number()->value()
         );
@@ -34,10 +34,10 @@ readonly class CreateMalloHandler
             mallo: $mallo
         );
 
-        $malloDto = MalloDto::fromArray($mallo); // 
+        $malloDto = MalloDto::fromArray($mallo);
 
-        $this->mercurePublish->publish( 
-            topic: '/mallo-created', 
+        $this->mercurePublish->publish(
+            topic: '/mallo-created',
             data: $malloDto->toArray()
         );
     }

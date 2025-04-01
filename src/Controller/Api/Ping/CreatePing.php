@@ -21,14 +21,14 @@ use Tocda\Message\Command\Ping\CreatePingCommand;
 class CreatePing extends AbstractTocdaController // class CreatePing qui hérite de AbstractTocdaController
 {
     /**
-     * @throws ExceptionInterface 
-     * @throws PingInvalidArgumentException 
+     * @throws ExceptionInterface
+     * @throws PingInvalidArgumentException
      * @throws Throwable
      */
-    #[Route(path: '/api/ping', name: 'tocda_api_create_ping', methods: ['POST'])] // methode POST donc Create 
-    public function __invoke( // __invoke est une méthode de la classe CreatePing
-        Request $request, // Request  
-        MessageBusInterface $commandBus, 
+    #[Route(path: '/api/ping', name: 'tocda_api_create_ping', methods: ['POST'])] // methode POST donc Create
+    public function __invoke(// __invoke est une méthode de la classe CreatePing
+        Request $request, // Request
+        MessageBusInterface $commandBus,
     ): Response { // Retourne une instance de la classe Response
         /** @var PingCreateDto $dto */
         $dto = $this->deserializeAndValidate( // -> = appel de la méthode deserializeAndValidate
@@ -41,11 +41,11 @@ class CreatePing extends AbstractTocdaController // class CreatePing qui hérite
         );
 
         $commandBus->dispatch( // Appel de la méthode dispatch de la classe MessageBusInterface methode utilisé pour envoyer une commande au bus de commande
-            new CreatePingCommand( 
-                pingEntityCreateDto: $dto 
+            new CreatePingCommand(
+                pingEntityCreateDto: $dto
             )
         );
 
-        return ApiResponseFactory::success(data: ['message' => 'La demande a été prise en compte.']); 
+        return ApiResponseFactory::success(data: ['message' => 'La demande a été prise en compte.']);
     }
 }
