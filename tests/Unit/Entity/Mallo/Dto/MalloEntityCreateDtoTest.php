@@ -21,37 +21,35 @@ class MalloEntityCreateDtoTest extends TocdaUnitTestCase
 
         self::assertNotNull($malloEntityCreateDto);
 
-        self::assertInstanceOf(MalloCreateDto::class, $malloEntityCreateDto); // On veut vérifier que $malloEntityCreateDto est bien une instance de la classe MalloCreateDto.
-        self::assertInstanceOf(MalloFirstname::class, $malloEntityCreateDto->firstname());
-        self::assertInstanceOf(MalloLastname::class, $malloEntityCreateDto->lastname());
-        self::assertInstanceOf(MalloNumber::class, $malloEntityCreateDto->number());
+        self::assertInstanceOf(MalloCreateDto::class, $malloEntityCreateDto);
 
-        self::assertSame('Mallo', (string) $malloEntityCreateDto->firstname()); // On teste si la propriéte firstname de $malloEntityCreateDto (qui appartient à MalloCreateDto) contient bien la bonne valeur ('Mallo') et le bon type (string)
-        self::assertSame('Zimmermann', (string) $malloEntityCreateDto->lastname());
-        self::assertSame('67', (string) $malloEntityCreateDto->number());
+        self::assertSame('John', $malloEntityCreateDto->firstname); // On teste si la propriéte firstname de $malloEntityCreateDto (qui appartient à MalloCreateDto) contient bien la bonne valeur ('John')
+        self::assertSame('Doe', $malloEntityCreateDto->lastname);
+        self::assertSame(13, $malloEntityCreateDto->number);
 
-        self::assertSame('Mallo', $malloEntityCreateDto->firstname()->value()); //  On teste si la vraie valeur contenue dans l’objet MalloFirstname est bien 'Mallo' et qu’elle est bien une string (sans conversion en string avec (string)
-        self::assertSame('Zimmermann', $malloEntityCreateDto->lastname()->value());
-        self::assertSame(67, $malloEntityCreateDto->number()->value());
+        self::assertSame('John', (string) $malloEntityCreateDto->firstname); // On teste si la propriéte firstname de $malloEntityCreateDto (qui appartient à MalloCreateDto) contient bien la bonne valeur ('Mallo') et le bon type (string)
+        self::assertSame('Doe', (string) $malloEntityCreateDto->lastname);
+        self::assertSame('13', (string) $malloEntityCreateDto->number);
     }
 
     public function testMalloEntityCreateDtoWithFunctionNew(): void
     {
         $malloEntityCreateDto = MalloCreateDto::new(
-            'Mallo',
-            'Zimmermann',
-            67
+            'John',
+            'Doe',
+            13
         );
 
         self::assertNotNull($malloEntityCreateDto);
 
         self::assertInstanceOf(MalloCreateDto::class, $malloEntityCreateDto);
-        self::assertInstanceOf(MalloFirstname::class, $malloEntityCreateDto->firstname());
-        self::assertInstanceOf(MalloLastname::class, $malloEntityCreateDto->lastname());
-        self::assertInstanceOf(MalloNumber::class, $malloEntityCreateDto->number());
 
-        self::assertSame('Mallo', $malloEntityCreateDto->firstname()->value());
-        self::assertSame('Zimmermann', $malloEntityCreateDto->lastname()->value());
-        self::assertSame(67, $malloEntityCreateDto->number()->value());
+        self::assertSame('John', $malloEntityCreateDto->firstname);
+        self::assertSame('Doe', $malloEntityCreateDto->lastname);
+        self::assertSame(13, $malloEntityCreateDto->number);
+
+        self::assertSame('John', (string) $malloEntityCreateDto->firstname);
+        self::assertSame('Doe', (string) $malloEntityCreateDto->lastname);
+        self::assertSame('13', (string) $malloEntityCreateDto->number);
     }
 }

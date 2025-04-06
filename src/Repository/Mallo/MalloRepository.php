@@ -22,14 +22,9 @@ class MalloRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function remove(string $id): void
+    public function remove(Mallo $mallo): void
     {
-        $mallo = $this->find($id);
-        if (null !== $mallo) {
-            $this->getEntityManager()->remove($mallo);
-            $this->getEntityManager()->flush();
-
-            $test = $this->find($id);
-        }
+        $this->getEntityManager()->remove($mallo);
+        $this->getEntityManager()->flush();
     }
 }

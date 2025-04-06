@@ -13,6 +13,9 @@ use Tocda\Entity\Mallo\Mallo;
 use Tocda\Entity\Mallo\ValueObject\MalloFirstname;
 use Tocda\Entity\Mallo\ValueObject\MalloLastname;
 use Tocda\Entity\Mallo\ValueObject\MalloNumber;
+use Tocda\Infrastructure\Doctrine\Types\Mallo\MalloFirstnameType;
+use Tocda\Infrastructure\Doctrine\Types\Mallo\MalloLastnameType;
+use Tocda\Infrastructure\Doctrine\Types\Mallo\MalloNumberType;
 use Tocda\Infrastructure\Mercure\MercurePublish;
 use Tocda\Message\Command\Mallo\CreateMalloCommand;
 use Tocda\Message\Command\Mallo\CreateMalloHandler;
@@ -31,7 +34,10 @@ use Zenstruck\Messenger\Test\InteractsWithMessenger;
     CoversClass(MalloNumber::class),
     CoversClass(CreateMalloHandler::class),
     CoversClass(MercurePublish::class),
-    CoversClass(MalloDto::class)
+    CoversClass(MalloDto::class),
+    CoversClass(MalloFirstnameType::class),
+    CoversClass(MalloLastnameType::class),
+    CoversClass(MalloNumberType::class),
 ]
 class CreateMalloHandlerTest extends TocdaFunctionalTestCase
 {
@@ -65,9 +71,6 @@ class CreateMalloHandlerTest extends TocdaFunctionalTestCase
         }
     }
 
-    /**
-     * @throws Exception
-     */
     public function testDoctrineConfiguration(): void
     {
         $connection = self::getEntityManager()->getConnection();
@@ -81,13 +84,9 @@ class CreateMalloHandlerTest extends TocdaFunctionalTestCase
     {
         $bus = self::getContainer()->get('messenger.default_bus');
         $dto = MalloCreateDtoFaker::new();
-        // $handler = new CreateMalloEntityHandler($this->repository);
         $command = new CreateMalloCommand($dto);
-        // $handler($command);
         $bus->dispatch($command);
         $this->flush();
-
-        // $mallo = $this->repository->findAll();
 
         $this->transport('async')->queue()->assertNotEmpty();
         $m = $this->transport('async')->queue()->messages();

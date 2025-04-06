@@ -4,21 +4,31 @@ declare(strict_types=1);
 
 namespace Tocda\Entity\Mallo\ValueObject;
 
+use JsonSerializable;
 use Stringable;
-use Symfony\Component\Validator\Constraints as Assert;
-use Tocda\Infrastructure\Shared\Type\ValueObjectInterface;
+use Tocda\Infrastructure\ApiResponse\Exception\Custom\Mallo\MalloInvalidArgumentException;
+use Tocda\Infrastructure\ApiResponse\Exception\Error\Error;
 
-readonly class MalloLastname implements Stringable, ValueObjectInterface
+readonly class MalloLastname implements Stringable, JsonSerializable
 {
-    public function __construct(
-        #[Assert\NotBlank(message: 'Le lastname est requis.')]
-        #[Assert\Length(max: 25, maxMessage: 'Le lastname doit contenir au plus {{ limit }} caractères.')]
-        private string $value,
-    ) {}
+    public function __construct(private string $value) {}
 
-    public static function fromValue(string|int|float|bool $value): self
+    /**
+     * @throws MalloInvalidArgumentException
+     */
+    public static function fromValue(string $value): self
     {
-        return new self(value: (string) $value);
+        $valueFormated = trim($value);
+
+        if ('' === $valueFormated) {
+            throw new MalloInvalidArgumentException(getMessage: 'Mallo lastname ne peux pas etre vide', errors: [Error::create(key: 'MalloLastname', message: 'Mallo lastname ne peux pas etre vide')]);
+        }
+
+        if (mb_strlen($valueFormated) > 255) {
+            throw new MalloInvalidArgumentException(getMessage: 'Mallo lastname ne peux pas etre supérieur à 255 caractères', errors: [Error::create(key: 'MalloLastname', message: 'Mallo lastname ne peux pas etre supérieur à 255 caractères')]);
+        }
+
+        return new self(value: $valueFormated);
     }
 
     public function value(): string
@@ -27,6 +37,11 @@ readonly class MalloLastname implements Stringable, ValueObjectInterface
     }
 
     public function __toString(): string
+    {
+        return $this->value;
+    }
+
+    public function jsonSerialize(): string
     {
         return $this->value;
     }

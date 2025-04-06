@@ -7,20 +7,25 @@ namespace Tocda\Tests\Unit\Entity\Mallo\Dto;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tocda\Entity\Mallo\Dto\MalloDto;
 use Tocda\Entity\Mallo\Mallo;
+use Tocda\Entity\Mallo\ValueObject\MalloFirstname;
+use Tocda\Entity\Mallo\ValueObject\MalloLastname;
+use Tocda\Entity\Mallo\ValueObject\MalloNumber;
 use Tocda\Tests\Faker\Dto\Mallo\MalloDtoFaker;
 use Tocda\Tests\Faker\Entity\Mallo\MalloFaker;
 use Tocda\Tests\Unit\TocdaUnitTestCase;
 
-#[CoversClass(Mallo::class), CoversClass(MalloDto::class)]
+#[CoversClass(Mallo::class), CoversClass(MalloDto::class), CoversClass(MalloFirstname::class), CoversClass(MalloLastname::class), CoversClass(MalloNumber::class)]
 class MalloEntityDtoTest extends TocdaUnitTestCase
 {
     public function testMalloDtoFromArray(): void
     {
         $malloEntity = MalloFaker::new();
 
-        self::assertSame('Mallo', $malloEntity->firstname());
-        self::assertSame('Zimmermann', $malloEntity->lastname());
-        self::assertSame(67, $malloEntity->number());
+        self::assertInstanceOf(Mallo::class, $malloEntity);
+
+        self::assertSame('John', $malloEntity->firstname()->value());
+        self::assertSame('Doe', $malloEntity->lastname()->value());
+        self::assertSame(13, $malloEntity->number()->value());
 
         self::assertNotNull($malloEntity);
         self::assertInstanceOf(Mallo::class, $malloEntity);
@@ -30,9 +35,9 @@ class MalloEntityDtoTest extends TocdaUnitTestCase
         self::assertNotNull($malloDto);
         self::assertInstanceOf(MalloDto::class, $malloDto);
 
-        self::assertSame('Mallo', $malloDto->firstname);
-        self::assertSame('Zimmermann', $malloDto->lastname);
-        self::assertSame(67, $malloDto->number);
+        self::assertSame('John', $malloDto->firstname);
+        self::assertSame('Doe', $malloDto->lastname);
+        self::assertSame(13, $malloDto->number);
 
         self::assertNotNull($malloDto->createdAt);
         self::assertNotNull($malloDto->updatedAt);
@@ -76,21 +81,21 @@ class MalloEntityDtoTest extends TocdaUnitTestCase
         // Créer 3 variables contenant chacune une instance de la classe Mallo
 
         $mallo1 = new Mallo(
-            firstname: 'Mathis',
-            lastname: 'Boisson',
-            number: 31,
+            firstname: new MalloFirstname('Mallorie'),
+            lastname: new MalloLastname('Zimmermann'),
+            number: new MalloNumber(10),
         );
 
         $mallo2 = new Mallo(
-            firstname: 'Tom',
-            lastname: 'Varet',
-            number: 04,
+            firstname: new MalloFirstname('Tom'),
+            lastname: new MalloLastname('Varet'),
+            number: new MalloNumber(04),
         );
 
         $mallo3 = new Mallo(
-            firstname: 'Lilou',
-            lastname: 'Drissi',
-            number: 29,
+            firstname: new MalloFirstname('Lilou'),
+            lastname: new MalloLastname('Drissi'),
+            number: new MalloNumber(29),
         );
 
         self::assertInstanceOf(Mallo::class, $mallo1);

@@ -4,21 +4,16 @@ declare(strict_types=1);
 
 namespace Tocda\Entity\Mallo\ValueObject;
 
+use JsonSerializable;
 use Stringable;
-use Symfony\Component\Validator\Constraints as Assert;
-use Tocda\Infrastructure\Shared\Type\ValueObjectInterface;
 
-readonly class MalloNumber implements Stringable, ValueObjectInterface
+readonly class MalloNumber implements Stringable, JsonSerializable
 {
-    public function __construct(
-        #[Assert\NotBlank(message: 'Le number est requis.')]
-        #[Assert\Range(min: 0, max: 100, notInRangeMessage: 'Le message doit contenir au plus {{ limit }} caractères.')]
-        private int $value,
-    ) {}
+    public function __construct(private int $value) {}
 
-    public static function fromValue(string|int|float|bool $value): self
+    public static function fromValue(int $value): self
     {
-        return new self(value: (int) $value);
+        return new self(value: $value);
     }
 
     public function value(): int
@@ -29,5 +24,10 @@ readonly class MalloNumber implements Stringable, ValueObjectInterface
     public function __toString(): string
     {
         return (string) $this->value;
+    }
+
+    public function jsonSerialize(): int
+    {
+        return $this->value;
     }
 }

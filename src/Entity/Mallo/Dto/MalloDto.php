@@ -21,9 +21,9 @@ class MalloDto // Nouvelle class MalloDto
     {
         return new self( // On retourne un nouveau soi de la class MalloDto
             id: (string) $data->id(), // le string qu'on met pour dire que id est un type string...
-            firstname: $data->firstname(),
-            lastname: $data->lastname(),
-            number: $data->number(),
+            firstname: $data->firstname()->value(),
+            lastname: $data->lastname()->value(),
+            number: $data->number()->value(),
             createdAt: $data->createdAt()->format('Y-m-d H:i:s'),
             updatedAt: $data->updatedAt()->format('Y-m-d H:i:s'),
         );

@@ -64,9 +64,9 @@ class CreateMalloTest extends TocdaFunctionalTestCase
     public function testInvokeReturnResponseSucces(): void
     {
         $payload = json_encode([ // payload est la donnée transmise dans une requête ou une réponse HTTP
-            'firstname' => 'Mallo',
-            'lastname' => 'Zimmermann',
-            'number' => 67,
+            'firstname' => 'John',
+            'lastname' => 'Doe',
+            'number' => 13,
         ]);
 
         $this->client->request('POST', '/api/mallo', [], [], [], $payload);
@@ -89,9 +89,9 @@ class CreateMalloTest extends TocdaFunctionalTestCase
     public function testInvokeInvalidateArgument(): void
     {
         $payload = json_encode([
-            'firstname' => 'Harry',
-            'lastname' => '',
-            'number' => 12,
+            'firstname' => 'John',
+            'lastname' => 'Doe',
+            'number' => 133,
         ]);
 
         $this->client->request('POST', '/api/mallo', [], [], [], $payload);

@@ -18,7 +18,6 @@ class MalloInvalidArgumentException extends AbstractApiResponseException
         int $statusCode = 422,
         ?array $errors = null,
     ) {
-
         $statusTexts = Response::$statusTexts;
 
         if ('' === $getMessage && true === array_key_exists($statusCode, $statusTexts)) {

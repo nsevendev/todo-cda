@@ -13,9 +13,9 @@ class MalloDtoFaker // Nouvelle class
     {
         return new MalloDto(
             id: Uuid::v7()->toString(),
-            firstname: 'Mallo',
-            lastname: 'Zimmermann',
-            number: 67,
+            firstname: 'John',
+            lastname: 'Doe',
+            number: 13,
             createdAt: '2000-03-31 12:00:00',
             updatedAt: '2000-03-31 12:00:00',
         );

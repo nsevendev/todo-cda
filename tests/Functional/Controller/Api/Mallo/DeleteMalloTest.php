@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tocda\Tests\Functional\Controller\Api\Mallo;
 
+use Doctrine\DBAL\Exception;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +12,9 @@ use Tocda\Controller\Api\Mallo\DeleteMallo;
 use Tocda\Controller\Api\Mallo\ListMallo;
 use Tocda\Entity\Mallo\Dto\MalloDto;
 use Tocda\Entity\Mallo\Mallo;
+use Tocda\Entity\Mallo\ValueObject\MalloFirstname;
+use Tocda\Entity\Mallo\ValueObject\MalloLastname;
+use Tocda\Entity\Mallo\ValueObject\MalloNumber;
 use Tocda\Infrastructure\ApiResponse\ApiResponse;
 use Tocda\Infrastructure\ApiResponse\ApiResponseFactory;
 use Tocda\Infrastructure\ApiResponse\Component\ApiResponseData;
@@ -18,6 +22,9 @@ use Tocda\Infrastructure\ApiResponse\Component\ApiResponseLink;
 use Tocda\Infrastructure\ApiResponse\Component\ApiResponseMessage;
 use Tocda\Infrastructure\ApiResponse\Component\ApiResponseMeta;
 use Tocda\Infrastructure\ApiResponse\Exception\Error\ListError;
+use Tocda\Infrastructure\Doctrine\Types\Mallo\MalloFirstnameType;
+use Tocda\Infrastructure\Doctrine\Types\Mallo\MalloLastnameType;
+use Tocda\Infrastructure\Doctrine\Types\Mallo\MalloNumberType;
 use Tocda\Infrastructure\Serializer\TocdaSerializer;
 use Tocda\Message\Command\Mallo\DeleteMalloCommand;
 use Tocda\Message\Query\Mallo\GetListMalloHandler;
@@ -39,6 +46,12 @@ use Tocda\Tests\Functional\TocdaFunctionalTestCase;
     CoversClass(GetListMalloHandler::class),
     CoversClass(MalloRepository::class),
     CoversClass(Mallo::class),
+    CoversClass(MalloFirstname::class),
+    CoversClass(MalloFirstnameType::class),
+    CoversClass(MalloLastname::class),
+    CoversClass(MalloLastnameType::class),
+    CoversClass(MalloNumber::class),
+    CoversClass(MalloNumberType::class),
     CoversClass(DeleteMallo::class),
     CoversClass(DeleteMalloCommand::class)
 ]
@@ -51,6 +64,9 @@ class DeleteMalloTest extends TocdaFunctionalTestCase
         $this->client = self::createClient();
     }
 
+    /**
+     * @throws Exception
+     */
     public function testCreateAndDeleteMallo(): void
     {
         $entityManager = $this->getEntityManager();

@@ -7,8 +7,21 @@ namespace Tocda\Tests\Functional\Message\Ping;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Tocda\Controller\Api\Mallo\DeleteMallo as MalloDeleteMallo;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\Uid\Uuid;
+use Tocda\Controller\Api\Mallo\DeleteMallo;
+use Tocda\Entity\Mallo\Dto\MalloPublishDeletedDto;
 use Tocda\Entity\Mallo\Mallo;
+use Tocda\Entity\Mallo\ValueObject\MalloFirstname;
+use Tocda\Entity\Mallo\ValueObject\MalloLastname;
+use Tocda\Entity\Mallo\ValueObject\MalloNumber;
+use Tocda\Infrastructure\ApiResponse\Exception\Custom\AbstractApiResponseException;
+use Tocda\Infrastructure\ApiResponse\Exception\Custom\Mallo\MalloBadRequestException;
+use Tocda\Infrastructure\ApiResponse\Exception\Error\Error;
+use Tocda\Infrastructure\Doctrine\Types\Mallo\MalloFirstnameType;
+use Tocda\Infrastructure\Doctrine\Types\Mallo\MalloLastnameType;
+use Tocda\Infrastructure\Doctrine\Types\Mallo\MalloNumberType;
+use Tocda\Infrastructure\Mercure\MercurePublish;
 use Tocda\Message\Command\Mallo\DeleteMalloCommand;
 use Tocda\Message\Command\Mallo\DeleteMalloHandler;
 use Tocda\Repository\Mallo\MalloRepository;
@@ -19,9 +32,20 @@ use Zenstruck\Messenger\Test\InteractsWithMessenger;
 #[
     CoversClass(MalloRepository::class),
     CoversClass(Mallo::class),
-    CoversClass(MalloDeleteMallo::class),
+    CoversClass(DeleteMallo::class),
     CoversClass(DeleteMalloCommand::class),
     CoversClass(DeleteMalloHandler::class),
+    CoversClass(MercurePublish::class),
+    CoversClass(MalloPublishDeletedDto::class),
+    CoversClass(AbstractApiResponseException::class),
+    CoversClass(MalloBadRequestException::class),
+    CoversClass(Error::class),
+    CoversClass(MalloFirstname::class),
+    CoversClass(MalloFirstnameType::class),
+    CoversClass(MalloLastname::class),
+    CoversClass(MalloLastnameType::class),
+    CoversClass(MalloNumber::class),
+    CoversClass(MalloNumberType::class),
 ]
 class DeleteMalloHandlerTest extends TocdaFunctionalTestCase
 {
@@ -57,9 +81,6 @@ class DeleteMalloHandlerTest extends TocdaFunctionalTestCase
         }
     }
 
-    /**
-     * @throws Exception
-     */
     public function testDoctrineConfiguration(): void
     {
         $connection = self::getEntityManager()->getConnection();
@@ -73,13 +94,23 @@ class DeleteMalloHandlerTest extends TocdaFunctionalTestCase
         $this->entityManager->persist($mallo);
         $this->entityManager->flush();
 
-        $this->handler = new DeleteMalloHandler($this->repository);
-        $this->transport('othersync')->send(new DeleteMalloCommand($mallo->id()->toString()));
+        $bus = self::getContainer()->get('messenger.default_bus');
+        $command = new DeleteMalloCommand($mallo->id()->toString());
+        $bus->dispatch($command);
         $this->flush();
 
-        $this->transport('othersync')->queue()->assertNotEmpty();
-        $this->transport('othersync')->queue()->assertCount(1);
+        $this->transport('async')->queue()->assertNotEmpty();
+        $this->transport('async')->queue()->assertCount(1);
+        $this->transport('async')->process(1);
+        $this->transport('async')->queue()->assertCount(0);
+    }
+
+    public function testDeletePingNotExist(): void
+    {
+        $this->expectException(HandlerFailedException::class);
+        $id = Uuid::v7()->toString();
+        $this->transport('othersync')->send(new DeleteMalloCommand($id));
         $this->transport('othersync')->process(1);
-        $this->transport('othersync')->queue()->assertCount(0);
+        $this->transport('othersync')->catchExceptions();
     }
 }

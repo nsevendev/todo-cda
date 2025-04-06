@@ -7,6 +7,7 @@ namespace Tocda\Controller\Api\Mallo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Tocda\Infrastructure\ApiResponse\ApiResponseFactory;
@@ -16,6 +17,9 @@ use Tocda\Message\Command\Mallo\DeleteMalloCommand;
 #[AsController]
 class DeleteMallo extends AbstractTocdaController
 {
+    /**
+     * @throws ExceptionInterface
+     */
     #[Route(path: '/api/mallo/{id}', name: 'tocda_api_delete_mallo', methods: ['DELETE'])]
     public function __invoke(Request $request, MessageBusInterface $commandBus): Response
     {
