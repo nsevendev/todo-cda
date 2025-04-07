@@ -28,11 +28,11 @@ class User
 
     public function __construct(
         #[ORM\Column(name: 'username', type: 'app_user_username', nullable: false, length: 25)]
-        private string $username,
+        public UserUsername $username,
         #[ORM\Column(name: 'email', type: 'app_user_email', nullable: false, length: 255)]
-        private string $email,
+        private UserEmail $email,
         #[ORM\Column(name: 'password', type: 'app_user_password', nullable: false, length: 255)]
-        private string $password,
+        private UserPassword $password,
     ) {
         $this->id = Uuid::v7();
         $this->createdAt = new DateTimeImmutable();
