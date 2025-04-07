@@ -12,6 +12,9 @@ doctrine:
             uuid: Symfony\Bridge\Doctrine\Types\UuidType
             app_ping_status: Tocda\Infrastructure\Doctrine\Types\Ping\PingStatusType
             app_ping_message: Tocda\Infrastructure\Doctrine\Types\Ping\PingMessageType
+            app_user_username: Tocda\Infrastructure\Doctrine\Types\User\UserNameType
+            app_user_email: Tocda\Infrastructure\Doctrine\Types\User\UserEmailType
+            app_user_password: Tocda\Infrastructure\Doctrine\Types\User\UserPasswordType
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
