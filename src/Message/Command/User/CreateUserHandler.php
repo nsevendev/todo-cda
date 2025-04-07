@@ -30,7 +30,7 @@ readonly class CreateUserHandler
     public function __invoke(CreateUserCommand $command): void
     {
         $user = new User(
-            username: UserUsername::fromValue($command->userEntityCreateDto->name),
+            username: UserUsername::fromValue($command->userEntityCreateDto->username),
             email: UserEmail::fromValue($command->userEntityCreateDto->email),
             password: UserPassword::fromValue($command->userEntityCreateDto->password)
         );
