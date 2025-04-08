@@ -44,9 +44,9 @@ final class MalloLastnameTypeTest extends TocdaUnitTestCase
 
     public function testGetSQLDeclaration(): void
     {
-        $column = ['length' => 255];
+        $column = ['length' => 25];
         $sql = $this->type->getSQLDeclaration($column, $this->platform);
-        self::assertSame('VARCHAR(255)', $sql);
+        self::assertSame('VARCHAR(25)', $sql);
     }
 
     /**

@@ -30,7 +30,7 @@ final class MalloFirstnameTypeTest extends TocdaUnitTestCase
     protected function setUp(): void
     {
         if (!Type::hasType('app_mallo_firstname')) {
-            Type::addType('app_mallo_lastname', MalloFirstnameType::class);
+            Type::addType('app_mallo_firstname', MalloFirstnameType::class);
         }
 
         $this->type = Type::getType('app_mallo_firstname');
@@ -44,9 +44,9 @@ final class MalloFirstnameTypeTest extends TocdaUnitTestCase
 
     public function testGetSQLDeclaration(): void
     {
-        $column = ['length' => 255];
+        $column = ['length' => 25];
         $sql = $this->type->getSQLDeclaration($column, $this->platform);
-        self::assertSame('VARCHAR(255)', $sql);
+        self::assertSame('VARCHAR(25)', $sql);
     }
 
     /**
