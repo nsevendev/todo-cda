@@ -6,7 +6,7 @@ namespace Tocda\Entity\User\Dto;
 
 use Tocda\Entity\User\User;
 
-class UserPublishDeleted 
+class UserPublishDeletedDto
 {
     public function __construct(
         public string $id,
