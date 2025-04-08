@@ -30,14 +30,17 @@ readonly class UserPassword implements Stringable, JsonSerializable
 
         return new self(value: $valueFormated);
     }
+
     public function value(): string
     {
         return $this->value;
     }
+
     public function __toString(): string
     {
         return $this->value;
     }
+
     public function jsonSerialize(): string
     {
         return $this->value;

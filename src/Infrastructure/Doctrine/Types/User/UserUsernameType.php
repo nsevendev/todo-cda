@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);   
+declare(strict_types=1);
 
 namespace Tocda\Infrastructure\Doctrine\Types\User;
 
@@ -21,7 +21,7 @@ final class UserUsernameType extends Type
     {
         return $platform->getStringTypeDeclarationSQL($column);
     }
-    
+
     /**
      * @throws UserInvalidArgumentException
      */
@@ -37,6 +37,7 @@ final class UserUsernameType extends Type
 
         return UserUsername::fromValue($value);
     }
+
     /**
      * @throws UserInvalidArgumentException
      */
@@ -52,6 +53,7 @@ final class UserUsernameType extends Type
 
         return $value->value();
     }
+
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;

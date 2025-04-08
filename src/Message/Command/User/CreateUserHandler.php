@@ -8,10 +8,10 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Tocda\Entity\User\Dto\UserDto;
 use Tocda\Entity\User\User;
 use Tocda\Entity\User\ValueObject\UserEmail;
-use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Entity\User\ValueObject\UserPassword;
+use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Infrastructure\ApiResponse\Exception\Custom\Mercure\MercureInvalidArgumentException;
-use Tocda\Infrastructure\ApiResponse\Exception\Custom\User\UserInvalidArgumentException;   
+use Tocda\Infrastructure\ApiResponse\Exception\Custom\User\UserInvalidArgumentException;
 use Tocda\Infrastructure\Mercure\MercurePublish;
 use Tocda\Repository\User\UserRepository;
 

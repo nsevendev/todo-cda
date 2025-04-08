@@ -1,17 +1,16 @@
 <?php
 
-declare(strict_types=1); 
+declare(strict_types=1);
 
-namespace Tocda\Entity\User; 
+namespace Tocda\Entity\User;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
-use Tocda\Repository\User\UserRepository;
 use Tocda\Entity\User\ValueObject\UserEmail;
 use Tocda\Entity\User\ValueObject\UserPassword;
 use Tocda\Entity\User\ValueObject\UserUsername;
-
+use Tocda\Repository\User\UserRepository;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User

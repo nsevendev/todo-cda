@@ -6,7 +6,7 @@ namespace Tocda\Entity\User\Dto;
 
 use Tocda\Entity\User\User;
 
-class UserDto
+class UserPublishDeleted 
 {
     public function __construct(
         public string $id,
@@ -15,8 +15,8 @@ class UserDto
         public string $password,
         public string $createdAt,
         public string $updatedAt,
-    ) {}
-
+    ) {
+    }
     public static function fromArray(User $data): self
     {
         return new self(
@@ -28,23 +28,6 @@ class UserDto
             updatedAt: $data->updatedAt()->format('Y-m-d H:i:s'),
         );
     }
-
-    /**
-     * @param User[] $data
-     *
-     * @return UserDto[]
-     */
-    public static function toListUser(array $data): array
-    {
-        $listUser = [];
-
-        foreach ($data as $user) {
-            $listUser[] = self::fromArray($user);
-        }
-
-        return $listUser;
-    }
-
     /**
      * @return array<string, mixed>
      */
@@ -55,8 +38,10 @@ class UserDto
             'username' => $this->username,
             'email' => $this->email,
             'password' => $this->password,
+            'delete' => 'true',
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ];
     }
 }
+

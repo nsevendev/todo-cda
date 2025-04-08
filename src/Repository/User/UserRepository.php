@@ -11,7 +11,6 @@ use Tocda\Entity\User\User;
 /**
  * @extends ServiceEntityRepository<User>
  */
-
 class UserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -24,6 +23,7 @@ class UserRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
     public function remove(User $user): void
     {
         $this->getEntityManager()->remove($user);

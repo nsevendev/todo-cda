@@ -23,7 +23,7 @@ readonly class UserCreateDto // "readonly" = rend l'élément non mutable (immut
         )]
         public string $password,
     ) {}
-    
+
     public static function new(string $username, string $email, string $password): self
     {
         return new self(

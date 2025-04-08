@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Throwable;   
+use Throwable;
 use Tocda\Entity\User\Dto\UserCreateDto;
 use Tocda\Infrastructure\ApiResponse\ApiResponseFactory;
 use Tocda\Infrastructure\ApiResponse\Exception\Custom\User\UserInvalidArgumentException;
@@ -20,7 +20,7 @@ use Tocda\Message\Command\User\CreateUserCommand;
 #[AsController]
 class CreateUser extends AbstractTocdaController
 {
-    /** 
+    /**
      * @throws ExceptionInterface
      * @throws UserInvalidArgumentException
      * @throws Throwable
@@ -29,9 +29,9 @@ class CreateUser extends AbstractTocdaController
     public function __invoke(
         Request $request,
         MessageBusInterface $commandBus,
-    ) : Response {
+    ): Response {
         /** @var UserCreateDto */
-        $dto= $this->deserializeAndValidate(
+        $dto = $this->deserializeAndValidate(
             data: $request->getContent(),
             dtoClass: UserCreateDto::class,
             fnException: fn (array $errors) => new UserInvalidArgumentException(
@@ -46,6 +46,6 @@ class CreateUser extends AbstractTocdaController
             )
         );
 
-        return ApiResponseFactory::success(data: ['message' => 'La demande a été prise en compte.']); 
+        return ApiResponseFactory::success(data: ['message' => 'La demande a été prise en compte.']);
     }
 }

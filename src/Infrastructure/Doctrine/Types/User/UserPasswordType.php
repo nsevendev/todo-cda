@@ -37,10 +37,11 @@ final class UserPasswordType extends Type
 
         return UserPassword::fromValue($value);
     }
+
     /**
      * @throws UserInvalidArgumentException
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string 
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if (null === $value) {
             return null;
@@ -52,6 +53,7 @@ final class UserPasswordType extends Type
 
         return $value->value();
     }
+
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Tocda\Tests\Faker\Entity\User;
 
 use Tocda\Entity\User\User;
-use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Entity\User\ValueObject\UserEmail;
 use Tocda\Entity\User\ValueObject\UserPassword;
+use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Infrastructure\ApiResponse\Exception\Custom\User\UserInvalidArgumentException;
 
 final class UserFaker
 {
-     /**
+    /**
      * @throws UserInvalidArgumentException
      */
     public static function new(): User

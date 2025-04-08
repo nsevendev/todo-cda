@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tocda\Tests\Faker\Dto\User;
 
 use Symfony\Component\Uid\Uuid;
-use Tocda\Entity\User\Dto\UserDto; 
+use Tocda\Entity\User\Dto\UserDto;
 
-class UserDtoFaker 
+class UserDtoFaker
 {
     public static function new(): UserDto
     {
