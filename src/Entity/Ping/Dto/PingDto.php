@@ -6,9 +6,9 @@ namespace Tocda\Entity\Ping\Dto;
 
 use Tocda\Entity\Ping\Ping;
 
-class PingDto
+class PingDto // Nouvelle class PingDto
 {
-    public function __construct(
+    public function __construct(// Constructeur de la class PingDto
         public string $id,
         public int $status,
         public string $message,
@@ -16,7 +16,7 @@ class PingDto
         public string $updatedAt,
     ) {}
 
-    public static function fromArray(Ping $data): self
+    public static function fromArray(Ping $data): self // fromArray = fonction statique de la class Ping ? $data = argument ? (je veux comprendre pcq ça j'ai du mal)
     {
         return new self(
             id: (string) $data->id(),
@@ -32,24 +32,24 @@ class PingDto
      *
      * @return PingDto[]
      */
-    public static function toListPing(array $data): array
+    public static function toListPing(array $data): array // Fonction statique qui retourne un tableau de PingDto avec $data en argument
     {
-        $listPing = [];
+        $listPing = []; // On initialise un tableau vide
 
-        foreach ($data as $ping) {
-            $listPing[] = self::fromArray($ping);
+        foreach ($data as $ping) { // Pour chaque élément de $data on parcours avec foreach
+            $listPing[] = self::fromArray($ping); // IDK
         }
 
-        return $listPing;
+        return $listPing; // On retourne le tableau $listPing
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function toArray(): array
+    public function toArray(): array // Fonction qui retourne le tableau
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id, // string id => cette valeur de id
             'status' => $this->status,
             'message' => $this->message,
             'createdAt' => $this->createdAt,

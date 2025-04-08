@@ -12,6 +12,9 @@ doctrine:
             uuid: Symfony\Bridge\Doctrine\Types\UuidType
             app_ping_status: Tocda\Infrastructure\Doctrine\Types\Ping\PingStatusType
             app_ping_message: Tocda\Infrastructure\Doctrine\Types\Ping\PingMessageType
+            app_mallo_firstname: Tocda\Infrastructure\Doctrine\Types\Mallo\MalloFirstnameType
+            app_mallo_lastname: Tocda\Infrastructure\Doctrine\Types\Mallo\MalloLastnameType
+            app_mallo_number: Tocda\Infrastructure\Doctrine\Types\Mallo\MalloNumberType
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true

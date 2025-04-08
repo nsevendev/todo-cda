@@ -17,7 +17,7 @@ class GetListPingHandler
     /**
      * @return PingDto[]
      */
-    public function __invoke(GetListPingQuery $query): array
+    public function __invoke(GetListPingQuery $query): array // pq
     {
         /** @var Ping[] $listPing */
         $listPing = $this->pingRepository->findAll();
