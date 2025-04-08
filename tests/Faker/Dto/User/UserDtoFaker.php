@@ -15,7 +15,7 @@ class UserDtoFaker
             id: Uuid::v7()->toString(),
             username: 'paquito',
             email: 'paquito@gmail.com',
-            password: 'paquito123',
+            password: 'Paquito123?',
             createdAt: '2004-12-10 12:00:00',
             updatedAt: '2004-12-10 12:00:00',
 

@@ -15,8 +15,8 @@ class UserPublishDeletedDto
         public string $password,
         public string $createdAt,
         public string $updatedAt,
-    ) {
-    }
+    ) {}
+
     public static function fromArray(User $data): self
     {
         return new self(
@@ -28,6 +28,7 @@ class UserPublishDeletedDto
             updatedAt: $data->updatedAt()->format('Y-m-d H:i:s'),
         );
     }
+
     /**
      * @return array<string, mixed>
      */
@@ -44,4 +45,3 @@ class UserPublishDeletedDto
         ];
     }
 }
-

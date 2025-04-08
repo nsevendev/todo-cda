@@ -20,7 +20,7 @@ final class UserFaker
         return new User(
             username: UserUsername::fromValue('paquito'),
             email: UserEmail::fromValue('paquito@gmail.com'),
-            password: UserPassword::fromValue('paquito123')
+            password: UserPassword::fromValue('Paquito123?')
         );
     }
 
@@ -32,7 +32,7 @@ final class UserFaker
         return new User(
             username: UserUsername::fromValue('paquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquito'),
             email: UserEmail::fromValue('paquito@gmail.com'),
-            password: UserPassword::fromValue('paquito123')
+            password: UserPassword::fromValue('Paquito123?')
         );
     }
 

@@ -13,7 +13,7 @@ class UserCreateDtoFaker
         return new UserCreateDto(
             'paquito',
             'paquito@gmail.com',
-            'paaquito123'
+            'Paquito123?'
         );
     }
 }
