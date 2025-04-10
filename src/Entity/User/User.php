@@ -13,6 +13,7 @@ use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Repository\User\UserRepository;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: 'users')] 
 class User
 {
     #[ORM\Id]

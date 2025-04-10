@@ -63,7 +63,7 @@ class ListUserTest extends TocdaFunctionalTestCase
 
     public function testInvokeReturnsExpectedResponse(): void
     {
-        $this->client->request('GET', '/api/user');
+        $this->client->request('GET', '/api/list-user');
         
         $content = $this->client->getResponse()->getContent();
 
