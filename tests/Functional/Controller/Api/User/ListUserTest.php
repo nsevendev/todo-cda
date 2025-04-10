@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tocda\Tests\Functional\Controller\Api\Ping;
+namespace Tocda\Tests\Functional\Controller\Api\User;
 
 use Doctrine\DBAL\Exception;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -63,7 +63,7 @@ class ListUserTest extends TocdaFunctionalTestCase
 
     public function testInvokeReturnsExpectedResponse(): void
     {
-        $this->client->request('GET', '/api/v1/users');
+        $this->client->request('GET', '/api/user');
         
         $content = $this->client->getResponse()->getContent();
 
