@@ -27,7 +27,7 @@ final class UserFaker
     /**
      * @throws UserInvalidArgumentException
      */
-    public static function withMessageMoreLonger(): User
+    public static function withUsernameMoreLonger(): User
     {
         return new User(
             username: UserUsername::fromValue('paquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquito'),
@@ -39,12 +39,60 @@ final class UserFaker
     /**
      * @throws UserInvalidArgumentException
      */
-    public static function withMessageEmpty(): User
+    public static function withUsernameEmpty(): User
     {
         return new User(
             username: UserUsername::fromValue(''),
             email: UserEmail::fromValue('paquito@gmail.com'),
             password: UserPassword::fromValue('Paquito123?')
+        );
+    }
+
+    /**
+     * @throws UserInvalidArgumentException
+     */
+    public static function withEmailMoreLonger(): User
+    {
+        return new User(
+            username: UserUsername::fromValue('paquito'),
+            email: UserEmail::fromValue('paquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.compaquito@gmail.com'),
+            password: UserPassword::fromValue('Paquito123?')
+        );
+    }
+
+    /**
+     * @throws UserInvalidArgumentException
+     */
+    public static function withEmailEmpty(): User
+    {
+        return new User(
+            username: UserUsername::fromValue('paquito'),
+            email: UserEmail::fromValue(''),
+            password: UserPassword::fromValue('Paquito123?')
+        );
+    }
+
+    /**
+     * @throws UserInvalidArgumentException
+     */
+    public static function withPasswordMoreLonger(): User
+    {
+        return new User(
+            username: UserUsername::fromValue('paquito'),
+            email: UserEmail::fromValue('paquito@gmail.com'),
+            password: UserPassword::fromValue('Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?Paquito123?')
+        );
+    }
+
+    /**
+     * @throws UserInvalidArgumentException
+     */
+    public static function withPasswordEmpty(): User
+    {
+        return new User(
+            username: UserUsername::fromValue('paquito'),
+            email: UserEmail::fromValue('paquito@gmail.com'),
+            password: UserPassword::fromValue('')
         );
     }
 }

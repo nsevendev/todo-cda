@@ -90,36 +90,4 @@ final class UserPasswordTypeTest extends TocdaUnitTestCase
     {
         self::assertTrue($this->type->requiresSQLCommentHint($this->platform));
     }
-
-    // Add tests for UserPassword
-    public function testUserEmailFromValueTrimsString(): void
-    {
-        $email = UserPassword::fromValue('   Paquito123?  ');
-        self::assertSame('Paquito123?', $email->value());
-    }
-
-    public function testUserEmailFromValueThrowsExceptionIfEmpty(): void
-    {
-        $this->expectException(UserInvalidArgumentException::class);
-        UserPassword::fromValue('   ');
-    }
-
-    public function testUserEmailFromValueThrowsExceptionIfTooLong(): void
-    {
-        $this->expectException(UserInvalidArgumentException::class);
-        $longEmail = str_repeat('a', 256).'Paquito123?';
-        UserPassword::fromValue($longEmail);
-    }
-
-    public function testUserEmailJsonSerialize(): void
-    {
-        $email = UserPassword::fromValue('Paquito123?');
-        self::assertSame('Paquito123?', $email->jsonSerialize());
-    }
-
-    public function testUserEmailToString(): void
-    {
-        $email = UserPassword::fromValue('Paquito123?');
-        self::assertSame('Paquito123?', (string) $email);
-    }
 }

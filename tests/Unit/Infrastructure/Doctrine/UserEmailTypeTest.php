@@ -90,36 +90,4 @@ final class UserEmailTypeTest extends TocdaUnitTestCase
     {
         self::assertTrue($this->type->requiresSQLCommentHint($this->platform));
     }
-
-    // Add tests for UserEmail
-    public function testUserEmailFromValueTrimsString(): void
-    {
-        $email = UserEmail::fromValue('   paquito@gmail.com  ');
-        self::assertSame('paquito@gmail.com', $email->value());
-    }
-
-    public function testUserEmailFromValueThrowsExceptionIfEmpty(): void
-    {
-        $this->expectException(UserInvalidArgumentException::class);
-        UserEmail::fromValue('   ');
-    }
-
-    public function testUserEmailFromValueThrowsExceptionIfTooLong(): void
-    {
-        $this->expectException(UserInvalidArgumentException::class);
-        $longEmail = str_repeat('a', 256).'paquito@gmail.com';
-        UserEmail::fromValue($longEmail);
-    }
-
-    public function testUserEmailJsonSerialize(): void
-    {
-        $email = UserEmail::fromValue('paquito@gmail.com');
-        self::assertSame('paquito@gmail.com', $email->jsonSerialize());
-    }
-
-    public function testUserEmailToString(): void
-    {
-        $email = UserEmail::fromValue('paquito@gmail.com');
-        self::assertSame('paquito@gmail.com', (string) $email);
-    }
 }

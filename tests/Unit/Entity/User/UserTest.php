@@ -50,7 +50,7 @@ class UserTest extends TocdaUnitTestCase
         self::assertSame($username, $user->username()->jsonSerialize());
         self::assertSame($email, $user->email()->jsonSerialize());
         self::assertSame($password, $user->password()->jsonSerialize());
-        self::assertSame((string) $username, (string) $user->username());
+        self::assertSame($username, (string) $user->username());
         self::assertSame($email, (string) $user->email());
         self::assertSame($password, (string) $user->password());
         self::assertNotNull($user->createdAt());
@@ -70,17 +70,45 @@ class UserTest extends TocdaUnitTestCase
         self::assertSame($newDateUpdated, $user->updatedAt());
     }
 
-    public function testEntityWithMessageMoreLonger(): void
+    public function testEntityWithUsernameMoreLonger(): void
     {
         $this->expectException(UserInvalidArgumentException::class);
 
-        $user = UserFaker::withMessageMoreLonger();
+        $user = UserFaker::withUsernameMoreLonger();
     }
 
-    public function testEntityWithMessageEmpty(): void
+    public function testEntityWithUsernameEmpty(): void
     {
         $this->expectException(UserInvalidArgumentException::class);
 
-        $user = UserFaker::withMessageEmpty();
+        $user = UserFaker::withUsernameEmpty();
+    }
+
+    public function testEntityWithEmailMoreLonger(): void
+    {
+        $this->expectException(UserInvalidArgumentException::class);
+
+        $user = UserFaker::withEmailMoreLonger();
+    }
+
+    public function testEntityWithEmailEmpty(): void
+    {
+        $this->expectException(UserInvalidArgumentException::class);
+
+        $user = UserFaker::withEmailEmpty();
+    }
+
+    public function testEntityWithPasswordMoreLonger(): void
+    {
+        $this->expectException(UserInvalidArgumentException::class);
+
+        $user = UserFaker::withPasswordMoreLonger();
+    }
+
+    public function testEntityWithPasswordEmpty(): void
+    {
+        $this->expectException(UserInvalidArgumentException::class);
+
+        $user = UserFaker::withPasswordEmpty();
     }
 }
