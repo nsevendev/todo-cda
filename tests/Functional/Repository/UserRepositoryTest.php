@@ -9,8 +9,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use ReflectionException;
 use Tocda\Entity\User\User;
 use Tocda\Entity\User\ValueObject\UserEmail;
-use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Entity\User\ValueObject\UserPassword;
+use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Infrastructure\ApiResponse\Exception\Custom\User\UserInvalidArgumentException;
 use Tocda\Infrastructure\Doctrine\Types\User\UserEmailType;
 use Tocda\Infrastructure\Doctrine\Types\User\UserPasswordType;
@@ -45,6 +45,7 @@ class UserRepositoryTest extends TocdaFunctionalTestCase
         $repository = self::getContainer()->get(UserRepository::class);
         $this->userRepository = $repository;
     }
+
     /**
      * @throws Exception
      */
@@ -56,6 +57,7 @@ class UserRepositoryTest extends TocdaFunctionalTestCase
             $conn->rollBack();
         }
     }
+
     /**
      * @throws ReflectionException
      * @throws UserInvalidArgumentException
@@ -67,7 +69,7 @@ class UserRepositoryTest extends TocdaFunctionalTestCase
         $this->persistAndFlush($user);
 
         /** @var User|null $found */
-        $found =$this->userRepository->find($user->id());
+        $found = $this->userRepository->find($user->id());
 
         self::assertNotNull($found, 'User not found');
         self::assertSame('paquito', $found->username()->value());

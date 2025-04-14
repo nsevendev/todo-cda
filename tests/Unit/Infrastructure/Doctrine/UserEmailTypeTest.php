@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tocda\Tests\Unit\Infrastructure\Doctrine;
 
 use Doctrine\DBAL\Platforms\MySQLPlatform;
-use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tocda\Entity\User\ValueObject\UserEmail;
@@ -36,70 +35,51 @@ final class UserEmailTypeTest extends TocdaUnitTestCase
         $this->type = Type::getType('app_user_email');
         $this->platform = new MySQLPlatform();
     }
+
     public function testGetName(): void
     {
         self::assertSame('app_user_email', $this->type->getName());
     }
+
     public function testGetSQLDeclaration(): void
     {
         $column = ['length' => 255];
         $sql = $this->type->getSQLDeclaration($column, $this->platform);
         self::assertSame('VARCHAR(255)', $sql);
     }
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
+
     public function testConvertToPHPValueWithValidString(): void
     {
-        $userUsername = $this->type->convertToPHPValue('paquito@gmail.com', $this->platform);
-        self::assertInstanceOf(UserEmail::class, $userUsername);
-        self::assertSame('paquito@gmail.com', $userUsername->value());
+        $userEmail = $this->type->convertToPHPValue('paquito@gmail.com', $this->platform);
+        self::assertInstanceOf(UserEmail::class, $userEmail);
+        self::assertSame('paquito@gmail.com', $userEmail->value());
     }
 
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
     public function testConvertToPHPValueWithNull(): void
     {
         $userEmail = $this->type->convertToPHPValue(null, $this->platform);
         self::assertNull($userEmail);
     }
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
+
     public function testConvertToPHPValueWithInvalidType(): void
     {
         $this->expectException(UserInvalidArgumentException::class);
         $this->type->convertToPHPValue(123, $this->platform);
     }
 
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
-    public function testConvertToDatabaseValueWithValidUserUsername(): void
+    public function testConvertToDatabaseValueWithValidUserEmail(): void
     {
-        $userUsername = new UserEmail('paquito@gmail.com');
-        $dbValue = $this->type->convertToDatabaseValue($userUsername, $this->platform);
+        $userEmail = new UserEmail('paquito@gmail.com');
+        $dbValue = $this->type->convertToDatabaseValue($userEmail, $this->platform);
         self::assertSame('paquito@gmail.com', $dbValue);
-    }  
+    }
 
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
     public function testConvertToDatabaseValueWithNull(): void
     {
         $dbValue = $this->type->convertToDatabaseValue(null, $this->platform);
         self::assertNull($dbValue);
     }
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
+
     public function testConvertToDatabaseValueWithInvalidType(): void
     {
         $this->expectException(UserInvalidArgumentException::class);
@@ -109,5 +89,37 @@ final class UserEmailTypeTest extends TocdaUnitTestCase
     public function testRequiresSQLCommentHint(): void
     {
         self::assertTrue($this->type->requiresSQLCommentHint($this->platform));
+    }
+
+    // Add tests for UserEmail
+    public function testUserEmailFromValueTrimsString(): void
+    {
+        $email = UserEmail::fromValue('   paquito@gmail.com  ');
+        self::assertSame('paquito@gmail.com', $email->value());
+    }
+
+    public function testUserEmailFromValueThrowsExceptionIfEmpty(): void
+    {
+        $this->expectException(UserInvalidArgumentException::class);
+        UserEmail::fromValue('   ');
+    }
+
+    public function testUserEmailFromValueThrowsExceptionIfTooLong(): void
+    {
+        $this->expectException(UserInvalidArgumentException::class);
+        $longEmail = str_repeat('a', 256).'paquito@gmail.com';
+        UserEmail::fromValue($longEmail);
+    }
+
+    public function testUserEmailJsonSerialize(): void
+    {
+        $email = UserEmail::fromValue('paquito@gmail.com');
+        self::assertSame('paquito@gmail.com', $email->jsonSerialize());
+    }
+
+    public function testUserEmailToString(): void
+    {
+        $email = UserEmail::fromValue('paquito@gmail.com');
+        self::assertSame('paquito@gmail.com', (string) $email);
     }
 }

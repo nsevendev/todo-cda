@@ -53,7 +53,7 @@ class UserTest extends TocdaUnitTestCase
         self::assertSame((string) $username, (string) $user->username());
         self::assertSame($email, (string) $user->email());
         self::assertSame($password, (string) $user->password());
-        self::assertNotNull($user->createdAt());  
+        self::assertNotNull($user->createdAt());
         self::assertNotNull($user->updatedAt());
     }
 
@@ -84,4 +84,3 @@ class UserTest extends TocdaUnitTestCase
         $user = UserFaker::withMessageEmpty();
     }
 }
-

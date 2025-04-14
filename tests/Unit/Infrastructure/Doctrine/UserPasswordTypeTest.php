@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tocda\Tests\Unit\Infrastructure\Doctrine;
 
 use Doctrine\DBAL\Platforms\MySQLPlatform;
-use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tocda\Entity\User\ValueObject\UserPassword;
@@ -36,20 +35,19 @@ final class UserPasswordTypeTest extends TocdaUnitTestCase
         $this->type = Type::getType('app_user_password');
         $this->platform = new MySQLPlatform();
     }
+
     public function testGetName(): void
     {
         self::assertSame('app_user_password', $this->type->getName());
     }
+
     public function testGetSQLDeclaration(): void
     {
         $column = ['length' => 255];
         $sql = $this->type->getSQLDeclaration($column, $this->platform);
         self::assertSame('VARCHAR(255)', $sql);
     }
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
+
     public function testConvertToPHPValueWithValidString(): void
     {
         $userUsername = $this->type->convertToPHPValue('paquito@gmail.com', $this->platform);
@@ -57,49 +55,31 @@ final class UserPasswordTypeTest extends TocdaUnitTestCase
         self::assertSame('paquito@gmail.com', $userUsername->value());
     }
 
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
     public function testConvertToPHPValueWithNull(): void
     {
         $userEmail = $this->type->convertToPHPValue(null, $this->platform);
         self::assertNull($userEmail);
     }
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
+
     public function testConvertToPHPValueWithInvalidType(): void
     {
         $this->expectException(UserInvalidArgumentException::class);
         $this->type->convertToPHPValue(123, $this->platform);
     }
 
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
     public function testConvertToDatabaseValueWithValidUserUsername(): void
     {
         $userUsername = new UserPassword('paquito@gmail.com');
         $dbValue = $this->type->convertToDatabaseValue($userUsername, $this->platform);
         self::assertSame('paquito@gmail.com', $dbValue);
-    }  
+    }
 
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
     public function testConvertToDatabaseValueWithNull(): void
     {
         $dbValue = $this->type->convertToDatabaseValue(null, $this->platform);
         self::assertNull($dbValue);
     }
-    /**
-     * @throws UserInvalidArgumentException
-     * @throws ConversionException
-     */
+
     public function testConvertToDatabaseValueWithInvalidType(): void
     {
         $this->expectException(UserInvalidArgumentException::class);
@@ -109,5 +89,37 @@ final class UserPasswordTypeTest extends TocdaUnitTestCase
     public function testRequiresSQLCommentHint(): void
     {
         self::assertTrue($this->type->requiresSQLCommentHint($this->platform));
+    }
+
+    // Add tests for UserPassword
+    public function testUserEmailFromValueTrimsString(): void
+    {
+        $email = UserPassword::fromValue('   Paquito123?  ');
+        self::assertSame('Paquito123?', $email->value());
+    }
+
+    public function testUserEmailFromValueThrowsExceptionIfEmpty(): void
+    {
+        $this->expectException(UserInvalidArgumentException::class);
+        UserPassword::fromValue('   ');
+    }
+
+    public function testUserEmailFromValueThrowsExceptionIfTooLong(): void
+    {
+        $this->expectException(UserInvalidArgumentException::class);
+        $longEmail = str_repeat('a', 256).'Paquito123?';
+        UserPassword::fromValue($longEmail);
+    }
+
+    public function testUserEmailJsonSerialize(): void
+    {
+        $email = UserPassword::fromValue('Paquito123?');
+        self::assertSame('Paquito123?', $email->jsonSerialize());
+    }
+
+    public function testUserEmailToString(): void
+    {
+        $email = UserPassword::fromValue('Paquito123?');
+        self::assertSame('Paquito123?', (string) $email);
     }
 }

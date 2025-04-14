@@ -7,8 +7,8 @@ namespace Tocda\Tests\Unit\Entity\User\Dto;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tocda\Entity\User\Dto\UserCreateDto;
 use Tocda\Entity\User\ValueObject\UserEmail;
-use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Entity\User\ValueObject\UserPassword;
+use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Tests\Faker\Dto\User\UserCreateDtoFaker;
 use Tocda\Tests\Unit\TocdaUnitTestCase;
 

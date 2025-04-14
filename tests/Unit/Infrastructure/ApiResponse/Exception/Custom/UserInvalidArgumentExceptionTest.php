@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tocda\Tests\Unit\Infrastructure\ApiResponse\Exception\Custom;     
+namespace Tocda\Tests\Unit\Infrastructure\ApiResponse\Exception\Custom;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\Exception;
@@ -53,7 +53,7 @@ class UserInvalidArgumentExceptionTest extends TocdaUnitTestCase
         $this->kernel = $this->createMock(HttpKernelInterface::class);
         $this->request = Request::create('/api/user');
     }
-    
+
     public function testOnKernelExceptionUserInvalidArgumentException(): void
     {
         $exceptionCustom = new UserInvalidArgumentException();

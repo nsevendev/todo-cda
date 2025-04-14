@@ -58,6 +58,7 @@ class CreateUserHandlerTest extends TocdaFunctionalTestCase
 
         $this->repository = $this->entityManager->getRepository(User::class);
     }
+
     /**
      * @throws Exception
      */

@@ -13,8 +13,8 @@ use Tocda\Controller\Api\User\ListUser;
 use Tocda\Entity\User\Dto\UserDto;
 use Tocda\Entity\User\User;
 use Tocda\Entity\User\ValueObject\UserEmail;
-use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Entity\User\ValueObject\UserPassword;
+use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Infrastructure\ApiResponse\ApiResponse;
 use Tocda\Infrastructure\ApiResponse\ApiResponseFactory;
 use Tocda\Infrastructure\ApiResponse\Component\ApiResponseData;
@@ -23,15 +23,14 @@ use Tocda\Infrastructure\ApiResponse\Component\ApiResponseMessage;
 use Tocda\Infrastructure\ApiResponse\Component\ApiResponseMeta;
 use Tocda\Infrastructure\ApiResponse\Exception\Error\ListError;
 use Tocda\Infrastructure\Doctrine\Types\User\UserEmailType;
-use Tocda\Infrastructure\Doctrine\Types\User\UserUsernameType;
 use Tocda\Infrastructure\Doctrine\Types\User\UserPasswordType;
+use Tocda\Infrastructure\Doctrine\Types\User\UserUsernameType;
 use Tocda\Infrastructure\Serializer\TocdaSerializer;
 use Tocda\Message\Command\User\DeleteUserCommand;
 use Tocda\Message\Query\User\GetListUserHandler;
 use Tocda\Repository\User\UserRepository;
 use Tocda\Tests\Faker\Entity\User\UserFaker;
 use Tocda\Tests\Functional\TocdaFunctionalTestCase;
-
 
 #[
     CoversClass(ListUser::class),
@@ -86,4 +85,3 @@ class DeleteUserTest extends TocdaFunctionalTestCase
         $entityManager->rollBack();
     }
 }
-

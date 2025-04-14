@@ -30,7 +30,7 @@ final class UserFaker
     public static function withMessageMoreLonger(): User
     {
         return new User(
-            username: UserUsername::fromValue('paquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquito'),
+            username: UserUsername::fromValue('paquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquito'),
             email: UserEmail::fromValue('paquito@gmail.com'),
             password: UserPassword::fromValue('Paquito123?')
         );
@@ -44,7 +44,7 @@ final class UserFaker
         return new User(
             username: UserUsername::fromValue(''),
             email: UserEmail::fromValue('paquito@gmail.com'),
-            password: UserPassword::fromValue('paquito123')
+            password: UserPassword::fromValue('Paquito123?')
         );
     }
 }

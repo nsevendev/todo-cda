@@ -116,4 +116,3 @@ class DeleteUserHandlerTest extends TocdaFunctionalTestCase
         $this->transport('othersync')->catchExceptions();
     }
 }
-
