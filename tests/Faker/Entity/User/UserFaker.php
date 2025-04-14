@@ -27,7 +27,7 @@ final class UserFaker
     /**
      * @throws UserInvalidArgumentException
      */
-    public static function withUsernameMoreLonger(): User
+    public static function withMessageMoreLonger(): User
     {
         return new User(
             username: UserUsername::fromValue('paquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquitopaquito'),
@@ -39,7 +39,7 @@ final class UserFaker
     /**
      * @throws UserInvalidArgumentException
      */
-    public static function withUsernameEmpty(): User
+    public static function withMessageEmpty(): User
     {
         return new User(
             username: UserUsername::fromValue(''),
