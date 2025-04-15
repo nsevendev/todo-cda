@@ -11,7 +11,7 @@ use Tocda\Controller\Api\User\CreateUser;
 use Tocda\Entity\User\Dto\UserCreateDto;
 use Tocda\Entity\User\ValueObject\UserEmail;
 use Tocda\Entity\User\ValueObject\UserPassword;
-use Tocda\Entity\User\ValueObject\UserUserName;
+use Tocda\Entity\User\ValueObject\UserUsername;
 use Tocda\Infrastructure\ApiResponse\ApiResponse;
 use Tocda\Infrastructure\ApiResponse\ApiResponseFactory;
 use Tocda\Infrastructure\ApiResponse\Component\ApiResponseData;
@@ -34,7 +34,7 @@ use Zenstruck\Messenger\Test\InteractsWithMessenger;
     CoversClass(TocdaSerializer::class),
     CoversClass(CreateUser::class),
     CoversClass(UserEmail::class),
-    CoversClass(UserUserName::class),
+    CoversClass(UserUsername::class),
     CoversClass(UserPassword::class),
     CoversClass(ApiResponse::class),
     CoversClass(ApiResponseFactory::class),
