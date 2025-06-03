@@ -35,7 +35,7 @@ readonly class CreateUserHandler
             password: UserPassword::fromValue($command->userEntityCreateDto->password)
         );
 
-        $this->userEntityRepository->save( // Appel de la méthode save de la classe UserRepository
+        $this->userEntityRepository->save(
             user: $user
         );
 
